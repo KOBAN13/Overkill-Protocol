@@ -4,7 +4,7 @@ namespace Input
 {
     public interface IInputSystem
     {
-        //Vector2 Input { get; }
-        //Vector3ReactiveProperty MouseClick { get; }
+        Vector2 Input { get; }
+        Vector3 PositionInMouseClick { get; }
     }
 }

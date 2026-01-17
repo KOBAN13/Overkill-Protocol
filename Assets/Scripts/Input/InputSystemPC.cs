@@ -6,12 +6,13 @@ using Zenject;
 
 namespace Input
 {
-    public class InputSystemPC : IInputSystem, IInitializable, IDisposable
+    public class InputSystemPC : IInputSystem, IInitializable, ITickable, IDisposable
     {
-        private NewInputSystem _input;
-        private readonly CompositeDisposable _compositeDisposable = new();
         public Vector2 Input { get; private set; }
-        public Vector3ReactiveProperty MouseClick { get; } = new();
+        public Vector3 PositionInMouseClick { get; private set; }
+        
+        private readonly NewInputSystem _input;
+        private readonly CompositeDisposable _compositeDisposable = new();
 
         public InputSystemPC(NewInputSystem input)
         {
@@ -22,25 +23,21 @@ namespace Input
         {
             Input = _input.Move.MoveWithWASD.ReadValue<Vector2>();
         }
+        
+        public void Tick()
+        {
+            GetMovement();
+        }
 
         public void Initialize()
         {
             _input.Enable();
             _input.Mouse.Fire.performed += OnFire;
-        
-            // Observable
-            //     .EveryUpdate()
-            //     .Subscribe(_ =>
-            //     {
-            //         GetMovement();
-            //     })
-            //     .AddTo(_compositeDisposable);
-        
         }
 
         private void OnFire(InputAction.CallbackContext obj)
         {
-            MouseClick.Value = UnityEngine.Input.mousePosition;
+            PositionInMouseClick = UnityEngine.Input.mousePosition;
         }
 
         public void Dispose()
