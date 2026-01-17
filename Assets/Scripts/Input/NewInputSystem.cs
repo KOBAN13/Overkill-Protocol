@@ -93,15 +93,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
             ""id"": ""5a4bedb3-1d3a-45d2-81c4-4e345a54d38b"",
             ""actions"": [
                 {
-                    ""name"": ""MoveWithArrows"",
-                    ""type"": ""Value"",
-                    ""id"": ""2a851da3-54df-4e80-91cd-b52d518b9e40"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""MoveWithWASD"",
                     ""type"": ""Value"",
                     ""id"": ""ffc1c108-d024-45e6-a2ee-a9f6ff0efe16"",
@@ -112,61 +103,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""f30f84e0-b843-44bb-8bc7-ce83f8fd4485"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveWithArrows"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""60eb8084-e56b-4d76-9c53-1be3af4df3d1"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""MoveWithArrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""d2a58050-60a9-420d-b15c-dbd6144a92d5"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""MoveWithArrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""c05dd574-0275-46b5-95b2-bb6730fc030b"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""MoveWithArrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""641ceff1-bf90-4126-b3ce-28e2cbbb1662"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""MoveWithArrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""c4e86857-09be-4b74-b27a-c1570b301a0d"",
@@ -221,6 +157,17 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""MoveWithWASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5a6a351-3d11-4d4f-a809-bd1ee3f384ff"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.01,y=0.01)"",
+                    ""groups"": ""Touch"",
+                    ""action"": ""MoveWithWASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -249,6 +196,17 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2e3ebfa-0b6b-4d71-986f-7b07b1c9d5dd"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -258,12 +216,22 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
             ""name"": ""New control scheme"",
             ""bindingGroup"": ""New control scheme"",
             ""devices"": []
+        },
+        {
+            ""name"": ""Touch"",
+            ""bindingGroup"": ""Touch"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
         // Move
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
-        m_Move_MoveWithArrows = m_Move.FindAction("MoveWithArrows", throwIfNotFound: true);
         m_Move_MoveWithWASD = m_Move.FindAction("MoveWithWASD", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
@@ -349,7 +317,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
     // Move
     private readonly InputActionMap m_Move;
     private List<IMoveActions> m_MoveActionsCallbackInterfaces = new List<IMoveActions>();
-    private readonly InputAction m_Move_MoveWithArrows;
     private readonly InputAction m_Move_MoveWithWASD;
     /// <summary>
     /// Provides access to input actions defined in input action map "Move".
@@ -362,10 +329,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public MoveActions(@NewInputSystem wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Move/MoveWithArrows".
-        /// </summary>
-        public InputAction @MoveWithArrows => m_Wrapper.m_Move_MoveWithArrows;
         /// <summary>
         /// Provides access to the underlying input action "Move/MoveWithWASD".
         /// </summary>
@@ -396,9 +359,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MoveActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MoveActionsCallbackInterfaces.Add(instance);
-            @MoveWithArrows.started += instance.OnMoveWithArrows;
-            @MoveWithArrows.performed += instance.OnMoveWithArrows;
-            @MoveWithArrows.canceled += instance.OnMoveWithArrows;
             @MoveWithWASD.started += instance.OnMoveWithWASD;
             @MoveWithWASD.performed += instance.OnMoveWithWASD;
             @MoveWithWASD.canceled += instance.OnMoveWithWASD;
@@ -413,9 +373,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="MoveActions" />
         private void UnregisterCallbacks(IMoveActions instance)
         {
-            @MoveWithArrows.started -= instance.OnMoveWithArrows;
-            @MoveWithArrows.performed -= instance.OnMoveWithArrows;
-            @MoveWithArrows.canceled -= instance.OnMoveWithArrows;
             @MoveWithWASD.started -= instance.OnMoveWithWASD;
             @MoveWithWASD.performed -= instance.OnMoveWithWASD;
             @MoveWithWASD.canceled -= instance.OnMoveWithWASD;
@@ -561,6 +518,19 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
         }
     }
+    private int m_TouchSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme TouchScheme
+    {
+        get
+        {
+            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+            return asset.controlSchemes[m_TouchSchemeIndex];
+        }
+    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Move" which allows adding and removing callbacks.
     /// </summary>
@@ -568,13 +538,6 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
     /// <seealso cref="MoveActions.RemoveCallbacks(IMoveActions)" />
     public interface IMoveActions
     {
-        /// <summary>
-        /// Method invoked when associated input action "MoveWithArrows" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveWithArrows(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "MoveWithWASD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

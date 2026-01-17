@@ -7,15 +7,6 @@
             "id": "5a4bedb3-1d3a-45d2-81c4-4e345a54d38b",
             "actions": [
                 {
-                    "name": "MoveWithArrows",
-                    "type": "Value",
-                    "id": "2a851da3-54df-4e80-91cd-b52d518b9e40",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "MoveWithWASD",
                     "type": "Value",
                     "id": "ffc1c108-d024-45e6-a2ee-a9f6ff0efe16",
@@ -26,61 +17,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "2D Vector",
-                    "id": "f30f84e0-b843-44bb-8bc7-ce83f8fd4485",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveWithArrows",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "60eb8084-e56b-4d76-9c53-1be3af4df3d1",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "MoveWithArrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "d2a58050-60a9-420d-b15c-dbd6144a92d5",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "MoveWithArrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "c05dd574-0275-46b5-95b2-bb6730fc030b",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "MoveWithArrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "641ceff1-bf90-4126-b3ce-28e2cbbb1662",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "MoveWithArrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "2D Vector",
                     "id": "c4e86857-09be-4b74-b27a-c1570b301a0d",
@@ -135,6 +71,17 @@
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b5a6a351-3d11-4d4f-a809-bd1ee3f384ff",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=0.01,y=0.01)",
+                    "groups": "Touch",
+                    "action": "MoveWithWASD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -163,6 +110,17 @@
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2e3ebfa-0b6b-4d71-986f-7b07b1c9d5dd",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -172,6 +130,17 @@
             "name": "New control scheme",
             "bindingGroup": "New control scheme",
             "devices": []
+        },
+        {
+            "name": "Touch",
+            "bindingGroup": "Touch",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
         }
     ]
 }

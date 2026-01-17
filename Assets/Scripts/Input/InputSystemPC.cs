@@ -1,5 +1,7 @@
 using System;
+using Input.Interface;
 using R3;
+using StrategyInstaller;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -31,13 +33,18 @@ namespace Input
 
         public void Initialize()
         {
+            _input.asset.bindingMask = InputBinding.MaskByGroup("PCInputSystem");
             _input.Enable();
             _input.Mouse.Fire.performed += OnFire;
         }
 
         private void OnFire(InputAction.CallbackContext obj)
         {
-            PositionInMouseClick = UnityEngine.Input.mousePosition;
+            var mouse = Mouse.current;
+            if (mouse != null)
+            {
+                PositionInMouseClick = mouse.position.ReadValue();
+            }
         }
 
         public void Dispose()

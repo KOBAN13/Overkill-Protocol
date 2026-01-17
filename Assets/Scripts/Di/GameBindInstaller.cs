@@ -1,5 +1,5 @@
-﻿using Input;
-using UnityEngine.InputSystem;
+﻿using Bootstrap;
+using Input;
 using Zenject;
 
 namespace Di
@@ -9,13 +9,19 @@ namespace Di
         public override void InstallBindings()
         {
             BindInput();
+            BindBootstrap();
         }
 
         private void BindInput()
         {
             Container.BindInterfacesAndSelfTo<NewInputSystem>().AsSingle();
-            Container.BindInterfacesAndSelfTo<MobileInputSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputSystemPC>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MobileInputSystem>().AsSingle();
+        }
+
+        private void BindBootstrap()
+        {
+            Container.BindInterfacesAndSelfTo<GameBootstrapper>().AsSingle();
         }
     }
 }
