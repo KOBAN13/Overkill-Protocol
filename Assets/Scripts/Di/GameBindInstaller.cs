@@ -1,22 +1,33 @@
 ﻿using Bootstrap;
-using Input;
+using Character;
+using Services.StrategyInstaller;
+using UnityEngine;
 using Zenject;
 
 namespace Di
 {
     public class GameBindInstaller : MonoInstaller
     {
+        [SerializeField] private PlayerComponents _playerComponents;
+        
         public override void InstallBindings()
         {
-            BindInput();
+            BindServices();
             BindBootstrap();
+            BindPlayer();
         }
 
-        private void BindInput()
+        private void BindServices()
         {
-            Container.BindInterfacesAndSelfTo<NewInputSystem>().AsSingle();
-            Container.BindInterfacesAndSelfTo<InputSystemPC>().AsSingle();
-            Container.BindInterfacesAndSelfTo<MobileInputSystem>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StrategyInitializer>().AsSingle();
+        }
+
+        private void BindPlayer()
+        {
+            Container.BindInterfacesAndSelfTo<PlayerComponents>().FromInstance(_playerComponents).AsSingle();
+            Container.BindInterfacesAndSelfTo<Movement>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Rotate>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Player>().AsSingle();
         }
 
         private void BindBootstrap()

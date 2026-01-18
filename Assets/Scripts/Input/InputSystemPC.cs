@@ -1,7 +1,6 @@
 using System;
 using Input.Interface;
 using R3;
-using StrategyInstaller;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -10,9 +9,11 @@ namespace Input
 {
     public class InputSystemPC : IInputSystem, IInitializable, ITickable, IDisposable
     {
-        public Vector2 Input { get; private set; }
+        public Vector2 MoveInput { get; private set; }
         public Vector3 PositionInMouseClick { get; private set; }
+        public Observable<Unit> OnClick => _onClick;
         
+        private readonly Subject<Unit> _onClick = new();
         private readonly NewInputSystem _input;
         private readonly CompositeDisposable _compositeDisposable = new();
 
@@ -23,7 +24,7 @@ namespace Input
 
         private void GetMovement()
         {
-            Input = _input.Move.MoveWithWASD.ReadValue<Vector2>();
+            MoveInput = _input.Move.MoveWithWASD.ReadValue<Vector2>();
         }
         
         public void Tick()
@@ -33,7 +34,7 @@ namespace Input
 
         public void Initialize()
         {
-            _input.asset.bindingMask = InputBinding.MaskByGroup("PCInputSystem");
+            _input.asset.bindingMask = InputBinding.MaskByGroup("PC");
             _input.Enable();
             _input.Mouse.Fire.performed += OnFire;
         }
@@ -41,10 +42,9 @@ namespace Input
         private void OnFire(InputAction.CallbackContext obj)
         {
             var mouse = Mouse.current;
-            if (mouse != null)
-            {
-                PositionInMouseClick = mouse.position.ReadValue();
-            }
+            
+            PositionInMouseClick = mouse.position.ReadValue();
+            _onClick.OnNext(Unit.Default);
         }
 
         public void Dispose()

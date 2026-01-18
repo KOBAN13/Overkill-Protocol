@@ -1,6 +1,6 @@
 ﻿using System;
 using Input.Interface;
-using StrategyInstaller;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -9,9 +9,11 @@ namespace Input
 {
     public class MobileInputSystem : IInputSystem, IInitializable, ITickable, IDisposable
     {
-        public Vector2 Input { get; private set; }
+        public Vector2 MoveInput { get; private set; }
         public Vector3 PositionInMouseClick { get; private set; }
-
+        public Observable<Unit> OnClick => _onClick;
+        
+        private readonly Subject<Unit> _onClick = new();
         private readonly NewInputSystem _input;
 
         public MobileInputSystem(NewInputSystem input)
@@ -21,14 +23,14 @@ namespace Input
 
         public void Initialize()
         {
-            _input.asset.bindingMask = InputBinding.MaskByGroup("MobileInputSystem");
+            _input.asset.bindingMask = InputBinding.MaskByGroup("Mobile");
             _input.Enable();
             _input.Mouse.Fire.performed += OnFire;
         }
 
         public void Tick()
         {
-            Input = _input.Move.MoveWithWASD.ReadValue<Vector2>();
+            MoveInput = _input.Move.MoveWithWASD.ReadValue<Vector2>();
         }
 
         private void OnFire(InputAction.CallbackContext context)
@@ -36,6 +38,7 @@ namespace Input
             var touch = Touchscreen.current.primaryTouch;
             
             PositionInMouseClick = touch.position.ReadValue();
+            _onClick.OnNext(Unit.Default);
         }
 
         public void Dispose()

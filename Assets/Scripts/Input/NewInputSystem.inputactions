@@ -34,7 +34,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -45,7 +45,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -56,7 +56,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -67,7 +67,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -78,7 +78,7 @@
                     "path": "<Touchscreen>/primaryTouch/delta",
                     "interactions": "",
                     "processors": "ScaleVector2(x=0.01,y=0.01)",
-                    "groups": "Touch",
+                    "groups": "Modile",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -106,7 +106,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme",
+                    "groups": "PC",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -117,7 +117,7 @@
                     "path": "<Touchscreen>/primaryTouch/press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Touch",
+                    "groups": "Modile",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -127,13 +127,13 @@
     ],
     "controlSchemes": [
         {
-            "name": "New control scheme",
-            "bindingGroup": "New control scheme",
+            "name": "PC",
+            "bindingGroup": "PC",
             "devices": []
         },
         {
-            "name": "Touch",
-            "bindingGroup": "Touch",
+            "name": "Modile",
+            "bindingGroup": "Modile",
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
