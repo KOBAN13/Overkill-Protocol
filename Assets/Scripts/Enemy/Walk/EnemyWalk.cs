@@ -1,16 +1,15 @@
-﻿using System;
-using R3;
+﻿using Character.Interface;
+using Enemy.Interface;
 using UnityEngine.AI;
 using Zenject;
 
 namespace Enemy.Walk
 {
-    public class EnemyWalk : IEnemyMove, IDisposable, ITickable
+    public class EnemyWalk : IEnemyMove, ITickable
     {
         private readonly ITarget _target;
         private readonly float _speed;
         private NavMeshAgent _navMeshAgent;
-        private readonly CompositeDisposable _compositeDisposable = new();
         
         public EnemyWalk(ITarget target, float speed)
         {
@@ -27,12 +26,6 @@ namespace Enemy.Walk
         {
             _navMeshAgent = agent;
             _navMeshAgent.speed = _speed;
-        }
-
-        public void Dispose()
-        {
-            _compositeDisposable.Clear();
-            _compositeDisposable.Dispose();
         }
     }
 }

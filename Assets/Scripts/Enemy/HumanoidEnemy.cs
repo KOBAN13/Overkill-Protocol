@@ -1,8 +1,8 @@
 ﻿using System;
-using Enemy.EnemyKill;
-using Enemy.Walk;
+using Enemy.Interface;
 using UnityEngine;
 using UnityEngine.AI;
+using IKill = Enemy.EnemyKill.IKill;
 
 namespace Enemy
 {
@@ -16,7 +16,8 @@ namespace Enemy
 
         public void InitEnemy(IHealthStats healthStats, IDamagable damagable, IEnemyMove enemyMove, IKill kill, float point)
         {
-            if (healthStats == null || damagable == null || enemyMove == null) throw new ArgumentNullException();
+            if (healthStats == null || damagable == null || enemyMove == null)
+                throw new ArgumentNullException();
 
             HealthStats = healthStats;
             Damagable = damagable;
@@ -30,11 +31,6 @@ namespace Enemy
         private void InitMove()
         {
             _enemyMove.InitMove(GetComponent<NavMeshAgent>());
-        }
-
-        private void OnDisable()
-        {
-            _enemyMove.Dispose();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Character;
 using Enemy.Health.Die;
+using Enemy.Interface;
 using R3;
 using R3.Triggers;
 using UnityEngine;
@@ -26,10 +27,5 @@ namespace Enemy.EnemyKill
                 .Subscribe(_ => _player.Died(playerComponents))
                 .AddTo(_compositeDisposable);
         }
-    }
-
-    public interface IKill
-    {
-        void OnTriggerEnemy(Collider collider);
     }
 }

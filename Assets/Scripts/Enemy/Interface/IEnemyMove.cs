@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 
-namespace Enemy.Walk
+namespace Enemy.Interface
 {
     public interface IEnemyMove
     {
         void InitMove(NavMeshAgent agent);
-        void Dispose();
     }
 }

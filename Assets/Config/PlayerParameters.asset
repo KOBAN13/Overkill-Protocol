@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d22f44126247c79398065bbaca6b0c, type: 3}
   m_Name: PlayerParameters
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 0
+  <MaxDistance>k__BackingField: 150
+  <RotationSpeed>k__BackingField: 180
   <CollisionLayerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192

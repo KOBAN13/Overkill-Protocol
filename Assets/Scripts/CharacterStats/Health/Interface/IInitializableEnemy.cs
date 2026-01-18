@@ -1,5 +1,6 @@
-﻿using Enemy.EnemyKill;
+﻿using Enemy.Interface;
 using Enemy.Walk;
+using IKill = Enemy.EnemyKill.IKill;
 
 namespace Enemy
 {
