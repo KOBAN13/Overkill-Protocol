@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Character;
-using CharacterStats.Health;
-using CharacterStats.Health.Die;
+using CharacterStats.Die;
+using CharacterStats.Stats;
 using Enemy.Config;
 using Enemy.EnemyKill;
 using Enemy.Pooling;
@@ -39,9 +39,8 @@ namespace Enemy.Factory
             var enemyMove = new EnemyWalk(_playerComponents, _enemyParameters.Speed);
             _tickableManager.Add(enemyMove);
 
-            var kill = new HumanoidEnemyKill(new Die<PlayerComponents>(), _playerComponents);
-            var die = new PooledEnemyDie(Despawn);
-            var health = new Health<HumanoidEnemy>(_enemyParameters.Health, die, enemy);
+            var kill = new HumanoidEnemyKill(new Die(_playerComponents));
+            var die = new PooledEnemyDie(() => Despawn(enemy));
             var damage = new Damage(enemy);
 
             enemy.InitEnemy(health, damage, enemyMove, kill);

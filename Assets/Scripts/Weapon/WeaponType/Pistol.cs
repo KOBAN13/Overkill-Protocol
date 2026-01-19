@@ -34,11 +34,8 @@ namespace Weapon.WeaponType
             if (Physics.Raycast(origin, direction, out var hit, maxDistance, hitMask, QueryTriggerInteraction.Ignore))
             {
                 var damageable = hit.collider.GetComponentInParent<IDamageable>();
-                
-                if (damageable != null)
-                {
-                    damageable.TakeDamage(_weaponConfig.Damage);
-                }
+
+                damageable?.TakeDamage(_weaponConfig.Damage);
             }
 
             _isFired = false;

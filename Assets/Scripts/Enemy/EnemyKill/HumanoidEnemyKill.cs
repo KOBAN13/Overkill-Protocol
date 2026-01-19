@@ -1,5 +1,4 @@
 ﻿using System;
-using Character;
 using CharacterStats.Health.Die;
 using Enemy.Interface;
 using R3;
@@ -10,21 +9,19 @@ namespace Enemy.EnemyKill
 {
     public class HumanoidEnemyKill : IKill, IDisposable
     {
-        private readonly IDie<PlayerComponents> _playerDie;
-        private readonly PlayerComponents _playerComponents;
+        private readonly IDie _playerDie;
         private readonly CompositeDisposable _compositeDisposable = new();
         
-        public HumanoidEnemyKill(IDie<PlayerComponents> playerDie, PlayerComponents playerComponents)
+        public HumanoidEnemyKill(IDie playerDie)
         {
             _playerDie = playerDie;
-            _playerComponents = playerComponents;
         }
 
         public void OnTriggerEnemy(Collider collider)
         {
             collider
                 .OnTriggerEnterAsObservable()
-                .Subscribe(_ => _playerDie.Died(_playerComponents))
+                .Subscribe(_ => _playerDie.Died())
                 .AddTo(_compositeDisposable);
         }
 

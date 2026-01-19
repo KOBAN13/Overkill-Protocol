@@ -29,6 +29,7 @@ namespace Di
             Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CharacterStats.Stats.CharacterStats>().AsTransient();
         }
 
         private void BindEnemy()

@@ -1,5 +1,7 @@
-﻿using CharacterStats.Health.Interface;
+﻿using Character.Interface;
+using CharacterStats.Health.Interface;
 using Enemy.Interface;
+using Game.Stats.Interface;
 using UnityEngine;
 using UnityEngine.AI;
 using IKill = Enemy.Interface.IKill;
@@ -13,13 +15,13 @@ namespace Enemy
         
         private IEnemyMove _enemyMove;
         public IHealthStats HealthStats { get; private set; }
-        public IDamagable Damagable { get; private set; }
+        public IDamageable Damagable { get; private set; }
         public IKill Kill { get; private set; }
 
-        public void InitEnemy(IHealthStats healthStats, IDamagable damagable, IEnemyMove enemyMove, IKill kill)
+        public void InitEnemy(IHealthStats healthStats, IDamageable damageable, IEnemyMove enemyMove, IKill kill)
         {
             HealthStats = healthStats;
-            Damagable = damagable;
+            Damagable = damageable;
             _enemyMove = enemyMove;
             Kill = kill;
             

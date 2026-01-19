@@ -1,4 +1,6 @@
-﻿namespace Enemy
+﻿using Game.Stats.Interface;
+
+namespace CharacterStats.Interface
 {
     public interface IHealth
     {
