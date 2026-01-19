@@ -1,6 +1,7 @@
 ﻿using System;
-using Enemy.Config;
+using Enemy.Factory;
 using R3;
+using Services.Config;
 using UnityEngine;
 using Zenject;
 
@@ -9,37 +10,34 @@ namespace Services.Spawners
     public class EnemySpawner : IInitializable, IDisposable
     {
         private readonly PointsCamera _pointsCamera;
-        private readonly SignalDeclaration.Factory.Factory _factory;
-
-        private readonly EnemyConfig _enemyConfig;
+        private readonly EnemySpawnParameters _spawnParameters;
+        private readonly IEnemyFactory _enemyFactory;
         private readonly CompositeDisposable _compositeDisposable = new();
 
-        public EnemySpawner(PointsCamera pointsCamera, EnemyConfig enemyConfig)
+        public EnemySpawner(
+            PointsCamera pointsCamera,
+            EnemySpawnParameters spawnParameters,
+            IEnemyFactory enemyFactory)
         {
             _pointsCamera = pointsCamera;
-            _factory = factory;
-            _enemyConfig = enemyConfig;
+            _spawnParameters = spawnParameters;
+            _enemyFactory = enemyFactory;
         }
 
-        public async void Initialize()
+        public void Initialize()
         {
-            var timeToSpawn = 2f;
+            var timeToSpawn = _spawnParameters.TimeToSpawnEnemy;
+            
             Observable
                 .Timer(TimeSpan.FromSeconds(timeToSpawn), TimeSpan.FromSeconds(timeToSpawn))
-                .Subscribe(_ => { StartSpawn(); })
-                .AddTo(_compositeDisposable);
-
-            Observable
-                .Timer(TimeSpan.FromSeconds(10f), TimeSpan.FromSeconds(10f))
-                .Subscribe(_ => timeToSpawn = Mathf.Clamp(timeToSpawn - 0.1f, 0.5f, 2f))
+                .Subscribe(_ => StartSpawn())
                 .AddTo(_compositeDisposable);
         }
 
         private void StartSpawn()
         {
-            var enemy = _enemyConfig.EnemyPrefab;
             _pointsCamera.Invisible(out var position);
-            _factory.CreateInitDiContainerAndInitializeEnemy(enemy, enemy, position, Quaternion.identity);
+            _enemyFactory.Spawn(position, Quaternion.identity);
         }
 
         public void Dispose()

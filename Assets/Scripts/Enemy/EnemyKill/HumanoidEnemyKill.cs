@@ -1,5 +1,6 @@
-﻿using Character;
-using Enemy.Health.Die;
+﻿using System;
+using Character;
+using CharacterStats.Health.Die;
 using Enemy.Interface;
 using R3;
 using R3.Triggers;
@@ -7,25 +8,30 @@ using UnityEngine;
 
 namespace Enemy.EnemyKill
 {
-    public class HumanoidEnemyKill : IKill
+    public class HumanoidEnemyKill : IKill, IDisposable
     {
-        private Die<PlayerComponents> _player;
+        private readonly IDie<PlayerComponents> _playerDie;
+        private readonly PlayerComponents _playerComponents;
+        private readonly CompositeDisposable _compositeDisposable = new();
         
-        private CompositeDisposable _compositeDisposable = new();
-
-        public HumanoidEnemyKill(Die<PlayerComponents> player)
+        public HumanoidEnemyKill(IDie<PlayerComponents> playerDie, PlayerComponents playerComponents)
         {
-            _player = player;
+            _playerDie = playerDie;
+            _playerComponents = playerComponents;
         }
 
         public void OnTriggerEnemy(Collider collider)
         {
-            PlayerComponents playerComponents = null;
-            
             collider
                 .OnTriggerEnterAsObservable()
-                .Subscribe(_ => _player.Died(playerComponents))
+                .Subscribe(_ => _playerDie.Died(_playerComponents))
                 .AddTo(_compositeDisposable);
+        }
+
+        public void Dispose()
+        {
+            _compositeDisposable.Clear();
+            _compositeDisposable.Dispose();
         }
     }
 }

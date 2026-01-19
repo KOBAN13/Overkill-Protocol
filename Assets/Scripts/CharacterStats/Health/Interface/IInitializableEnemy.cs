@@ -1,11 +1,10 @@
-﻿using Enemy.Interface;
-using Enemy.Walk;
-using IKill = Enemy.EnemyKill.IKill;
+﻿using Enemy;
+using Enemy.Interface;
 
-namespace Enemy
+namespace CharacterStats.Health.Interface
 {
     public interface IInitializableEnemy
     {
-        void InitEnemy(IHealthStats healthStats, IDamagable damagable, IEnemyMove enemyMove, IKill kill, float point);
+        void InitEnemy(IHealthStats healthStats, IDamagable damagable, IEnemyMove enemyMove, IKill kill);
     }
 }

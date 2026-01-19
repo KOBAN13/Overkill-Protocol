@@ -1,10 +1,11 @@
 ﻿using System;
+using Enemy;
 
-namespace Enemy
+namespace CharacterStats.Health
 {
     public class Damage : IDamagable
     {
-        private IHealth _health;
+        private readonly IHealth _health;
 
         public Damage(IHealth health)
         {
@@ -13,7 +14,8 @@ namespace Enemy
         
         public void SetDamage(float value)
         {
-            if (value < 0) throw new ArgumentOutOfRangeException();
+            if (value < 0) 
+                throw new ArgumentOutOfRangeException();
             
             _health.HealthStats.SetDamage(value);
         }

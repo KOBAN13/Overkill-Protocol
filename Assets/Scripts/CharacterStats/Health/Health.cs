@@ -1,17 +1,18 @@
 ﻿using System;
-using Enemy.Health.Die;
+using CharacterStats.Health.Die;
+using Enemy;
 using UnityEngine;
 
-namespace Enemy
+namespace CharacterStats.Health
 {
     public class Health<T> : IHealthStats where T : MonoBehaviour
     {
         public float MaxHealth { get; }
         public float CurrentHealth { get; private set; }
-        private readonly Die<T> _objectHealth;
+        private readonly IDie<T> _objectHealth;
         private readonly T _objectDie;
 
-        public Health(float health, Die<T> objectHealth, T objectDie)
+        public Health(float health, IDie<T> objectHealth, T objectDie)
         {
             MaxHealth = CurrentHealth = health;
             _objectHealth = objectHealth;

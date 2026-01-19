@@ -1,5 +1,9 @@
 ﻿using Bootstrap;
 using Character;
+using Enemy.Factory;
+using Enemy.Pooling;
+using Enemy.Walk;
+using Services.Spawners;
 using Services.StrategyInstaller;
 using UnityEngine;
 using Zenject;
@@ -15,11 +19,21 @@ namespace Di
             BindServices();
             BindBootstrap();
             BindPlayer();
+            BindEnemy();
         }
 
         private void BindServices()
         {
             Container.BindInterfacesAndSelfTo<StrategyInitializer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PointsCamera>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
+        }
+
+        private void BindEnemy()
+        {
+            //Container.BindInterfacesAndSelfTo<EnemyWalk>().AsTransient();
         }
 
         private void BindPlayer()

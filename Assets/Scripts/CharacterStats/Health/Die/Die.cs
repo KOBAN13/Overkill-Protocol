@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Enemy.Health.Die
+namespace CharacterStats.Health.Die
 {
-    public class Die<T> where T : MonoBehaviour
+    public class Die<T> : IDie<T> where T : MonoBehaviour
     {
         public void Died(T objectDie)
         {

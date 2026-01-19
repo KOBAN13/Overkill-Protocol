@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponConfig: {fileID: 11400000, guid: 444b1e0598082f540af4254e0632d828, type: 2}
   _playerParameters: {fileID: 11400000, guid: 07fdf8ae482922c4399298f29b913276, type: 2}
+  _enemySpawnParameters: {fileID: 11400000, guid: 27df65c2f7ef2d6489004f69fa8b59bc,
+    type: 2}
+  _enemyParameters: {fileID: 11400000, guid: ef7cda25ec848f24a8da9bac9e4bb8d1, type: 2}
