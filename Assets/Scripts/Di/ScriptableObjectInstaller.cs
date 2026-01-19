@@ -1,5 +1,8 @@
-﻿using Character.Config;
+﻿using Character;
+using Character.Config;
+using CharacterStats.Impl;
 using Enemy.Config;
+using Enemy.Factory;
 using Services.Config;
 using UnityEngine;
 using Weapon.Configs;
@@ -14,6 +17,8 @@ namespace Di
         [SerializeField] private PlayerParameters _playerParameters;
         [SerializeField] private EnemySpawnParameters _enemySpawnParameters;
         [SerializeField] private EnemyParameters _enemyParameters;
+        [SerializeField] private StatConfigCollection _enemyStatConfigProvider;
+        [SerializeField] private StatConfigCollection _playerStatConfigProvider;
         
         public override void InstallBindings()
         {
@@ -21,6 +26,16 @@ namespace Di
             Container.BindInterfacesAndSelfTo<PlayerParameters>().FromScriptableObject(_playerParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawnParameters>().FromScriptableObject(_enemySpawnParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyParameters>().FromScriptableObject(_enemyParameters).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<StatConfigCollection>()
+                .FromScriptableObject(_playerStatConfigProvider)
+                .AsCached()
+                .WhenInjectedInto<Player>();
+            
+            Container.BindInterfacesAndSelfTo<StatConfigCollection>()
+                .FromScriptableObject(_enemyStatConfigProvider)
+                .AsCached()
+                .WhenInjectedInto<EnemyFactory>();
         }
     }
 }

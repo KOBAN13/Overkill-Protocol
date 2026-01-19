@@ -4,5 +4,6 @@
     {
         float BaseSpeed { get; }
         float BuffSpeedInPercentage { get; }
+        float MaxBuffSpeedInPercentage { get; }
     }
 }

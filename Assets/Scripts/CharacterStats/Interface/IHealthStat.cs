@@ -3,7 +3,7 @@ using R3;
 
 namespace CharacterStats.Interface
 {
-    public interface IHealthStats
+    public interface IHealthStat
     {
         ReadOnlyReactiveProperty<float> CurrentHealthPercentage { get; }
         float CurrentHealth { get; }

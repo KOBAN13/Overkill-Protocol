@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CharacterStats.Interface;
 using Game.Stats.Interface;
+using Helper;
 using R3;
 
 namespace CharacterStats.Stats
@@ -11,8 +12,10 @@ namespace CharacterStats.Stats
         private readonly Dictionary<ECharacterStat, ICharacterStat> _characterStats = new();
         private readonly CompositeDisposable _compositeDisposable = new();
         private static readonly Subject<Unit> OnAnyCharacterStatChange = new();
+        private IStatConfigProvider _configProvider;
 
         private static readonly Action<float> OnStatValueChanged = _ => OnAnyCharacterStatChange.OnNext(Unit.Default);
+        public Observable<Unit> OnAnyStatChange => OnAnyCharacterStatChange;
         
         public TStat GetStat<TStat>(ECharacterStat characterStatType) where TStat : class
         {
@@ -30,12 +33,32 @@ namespace CharacterStats.Stats
             return stat != null;
         }
 
-        public void AddStat<TConfig>(ICharacterStatConfig<TConfig> stat, TConfig config)
-            where TConfig : IStatConfig
+        public void SetConfigProvider(IStatConfigProvider configProvider)
         {
-            if (_characterStats.ContainsKey(stat.StatType))
+            _configProvider = configProvider;
+        }
+
+        public void AddStat(ICharacterStatConfig stat)
+        {
+            var config = _configProvider.GetConfig(stat.StatType);
+                
+            AddStat(stat, config);
+        }
+
+        public void AddStat(ICharacterStatConfig stat, IStatConfig config)
+        {
+            Preconditions.CheckNotNull(stat, nameof(stat));
+            Preconditions.CheckNotNull(config, nameof(config));
+
+            if (_characterStats.TryGetValue(stat.StatType, out var existing))
             {
-                throw new ArgumentException($"Stat {stat.StatType} already exists");
+                if (existing is ICharacterStatConfig existingConfig)
+                {
+                    existingConfig.Initialize(config);
+                    return;
+                }
+
+                throw new ArgumentException($"Stat {stat.StatType} already exists with incompatible type");
             }
 
             stat.Initialize(config);
@@ -46,16 +69,27 @@ namespace CharacterStats.Stats
                 .AddTo(_compositeDisposable);
         }
 
-        public Observable<Unit> OnAnyStatChange => OnAnyCharacterStatChange;
-        
-        public Observable<TStat> OnStatChange<TStat>(ECharacterStat statType) where TStat : class, ICharacterStat
+        public TStat GetOrAddStat<TStat>(ECharacterStat statType, Func<TStat> create)
+            where TStat : class, ICharacterStatConfig
         {
-            if (!_characterStats.TryGetValue(statType, out var stat) || stat is not TStat typedStat)
+            if (_characterStats.TryGetValue(statType, out var existing))
             {
-                return Observable.Empty<TStat>();
+                if (existing is TStat typed)
+                {
+                    return typed;
+                }
+
+                throw new ArgumentException($"Stat {statType} already exists with incompatible type");
             }
 
-            return typedStat.OnCurrentValueChanged.Select(_ => typedStat);
+            var stat = create();
+            if (stat.StatType != statType)
+            {
+                throw new ArgumentException($"Stat type mismatch. Expected {statType}, got {stat.StatType}");
+            }
+
+            AddStat(stat);
+            return stat;
         }
 
         public void Dispose()

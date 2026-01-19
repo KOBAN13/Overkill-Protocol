@@ -6,9 +6,9 @@ namespace CharacterStats.Stats
 {
     public class Damage : IDamageable
     {
-        private readonly IHealth _health;
+        private readonly IHealthStat _health;
 
-        public Damage(IHealth health)
+        public Damage(IHealthStat health)
         {
             _health = health;
         }
@@ -18,7 +18,7 @@ namespace CharacterStats.Stats
             if (amount < 0) 
                 throw new ArgumentOutOfRangeException();
             
-            _health.HealthStats.SetDamage(amount);
+            _health.SetDamage(amount);
         }
     }
 }

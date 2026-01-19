@@ -1,7 +1,9 @@
+using CharacterStats.Stats;
+
 namespace CharacterStats.Interface
 {
     public interface IStatConfig
     {
-        float MaxValue { get; }
+        ECharacterStat StatType { get; }
     }
 }

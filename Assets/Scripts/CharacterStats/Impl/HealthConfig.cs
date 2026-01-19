@@ -1,26 +1,24 @@
 ﻿using CharacterStats.Interface;
-using Game.Stats.Interface;
+using CharacterStats.Stats;
 using UnityEngine;
 
 namespace CharacterStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(HealthConfig), menuName = "Stats" + "/" + nameof(HealthConfig))]
-    public class HealthConfig : ScriptableObject, IHealthConfig, IStatConfig
+    public class HealthConfig : StatConfig, IHealthConfig
     {
+        public override ECharacterStat StatType => ECharacterStat.Health;
+
         [field: SerializeField]
         [field: Range(10, 1000)]
-        public float MaxValue { get; private set; }
+        public float BaseValue { get; private set; }
+
+        [field: SerializeField]
+        [field: Range(5, 20)]
+        public float BuffHealthInPercentage { get; private set; }
         
         [field: SerializeField]
-        [field: Range(0.01f, 1f)]
-        public float CoefficientRecoveryHealth { get; private set; }
-        
-        [field: SerializeField]
-        [field: Range(0f, 100f)]
-        public float TimeRecoveryHealth { get; private set; }
-        
-        [field: SerializeField]
-        [field: Range(0.01f, 1f)]
-        public float CoefficientRecoveryHealthAfterEnemyDead { get; private set; }
+        [field: Range(0, 200)]
+        public float MaxBuffHealthInPercentage { get; private set; }
     }
 }

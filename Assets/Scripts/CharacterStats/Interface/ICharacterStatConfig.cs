@@ -1,9 +1,9 @@
-using CharacterStats.Interface;
+using Game.Stats.Interface;
 
-namespace Game.Stats.Interface
+namespace CharacterStats.Interface
 {
-    public interface ICharacterStatConfig<in T> : ICharacterStat where T : IStatConfig
+    public interface ICharacterStatConfig : ICharacterStat
     {
-        void Initialize(T config);
+        void Initialize(IStatConfig config);
     }
 }

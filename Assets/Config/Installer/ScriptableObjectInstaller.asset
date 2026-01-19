@@ -17,3 +17,7 @@ MonoBehaviour:
   _enemySpawnParameters: {fileID: 11400000, guid: 27df65c2f7ef2d6489004f69fa8b59bc,
     type: 2}
   _enemyParameters: {fileID: 11400000, guid: ef7cda25ec848f24a8da9bac9e4bb8d1, type: 2}
+  _enemyStatConfigProvider: {fileID: 11400000, guid: 9f6a3d8c1c5f4b73a0a3d84b94a7d6a3,
+    type: 2}
+  _playerStatConfigProvider: {fileID: 11400000, guid: ffb55f325ef3e25448c0fb0acf09f65f,
+    type: 2}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyParameters
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 10
+  <StatConfigs>k__BackingField: {fileID: 11400000, guid: 9f6a3d8c1c5f4b73a0a3d84b94a7d6a3, type: 2}
   <Speed>k__BackingField: 2
   <EnemyPrefab>k__BackingField: {fileID: 6897107083987229846, guid: 1a0aaf2550460034d8d4676996ebda04,
     type: 3}

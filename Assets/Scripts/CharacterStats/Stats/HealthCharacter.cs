@@ -4,14 +4,13 @@ using CharacterStats.Die;
 using CharacterStats.Impl;
 using CharacterStats.Interface;
 using Cysharp.Threading.Tasks;
-using Game.Stats.Interface;
 using Helper;
 using R3;
 using UnityEngine;
 
 namespace CharacterStats.Stats
 {
-    public class HealthCharacter : IHealthStats, ICharacterStatConfig<HealthConfig>, IDisposable
+    public class HealthCharacter : IHealthStat, ICharacterStatConfig, IDisposable
     {
         public ECharacterStat StatType => ECharacterStat.Health;
         public float MaxValue { get; private set; }
@@ -27,17 +26,23 @@ namespace CharacterStats.Stats
         private readonly ReactiveProperty<float> _currentHealth = new();
         private readonly ReactiveProperty<float> _amountHealthPercentage = new();
         
-        public void Initialize(HealthConfig config)
+        public void Initialize(IStatConfig config)
         {
-            _config = config;
-            MaxValue = _currentHealth.Value = _config.MaxValue;
+            if (config is not HealthConfig healthConfig)
+            {
+                throw new ArgumentException("HealthCharacter requires HealthConfig");
+            }
+
+            _config = healthConfig;
+            _isDead = false;
+            MaxValue = _currentHealth.Value = _config.BaseValue;
             _amountHealthPercentage.Value = 1f;
         }
         
         public void ResetHealthStat()
         {
             _isDead = false;
-            MaxValue = _currentHealth.Value = _config.MaxValue;
+            MaxValue = _currentHealth.Value = _config.BaseValue;
             _amountHealthPercentage.Value = 1f;
         }
         
