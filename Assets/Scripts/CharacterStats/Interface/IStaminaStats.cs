@@ -1,6 +1,6 @@
 ﻿using R3;
 
-namespace Stats.Interface
+namespace CharacterStats.Interface
 {
     public interface IStaminaStats
     {

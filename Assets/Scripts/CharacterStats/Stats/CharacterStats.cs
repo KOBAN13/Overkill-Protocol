@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CharacterStats.Interface;
 using Game.Stats.Interface;
 using R3;
 

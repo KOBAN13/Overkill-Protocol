@@ -1,5 +1,5 @@
 ﻿using System;
-using CharacterStats.Health.Die;
+using CharacterStats.Die;
 
 namespace Enemy.Pooling
 {

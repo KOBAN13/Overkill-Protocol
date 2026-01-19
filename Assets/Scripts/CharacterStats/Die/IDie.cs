@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace CharacterStats.Health.Die
+﻿namespace CharacterStats.Die
 {
     public interface IDie
     {

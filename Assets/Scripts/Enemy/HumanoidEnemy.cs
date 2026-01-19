@@ -1,5 +1,6 @@
 ﻿using Character.Interface;
-using CharacterStats.Health.Interface;
+using CharacterStats.Impl;
+using CharacterStats.Interface;
 using Enemy.Interface;
 using Game.Stats.Interface;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using Character.Interface;
 
-namespace CharacterStats.Impl
+namespace CharacterStats.Interface
 {
     public interface IDamage
     {

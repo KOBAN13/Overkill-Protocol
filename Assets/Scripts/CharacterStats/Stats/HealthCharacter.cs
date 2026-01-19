@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
-using CharacterStats.Health.Die;
-using CharacterStats.Stats.Impl;
+using CharacterStats.Die;
+using CharacterStats.Impl;
+using CharacterStats.Interface;
 using Cysharp.Threading.Tasks;
 using Game.Stats.Interface;
 using Helper;

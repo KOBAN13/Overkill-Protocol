@@ -1,5 +1,5 @@
 ﻿using System;
-using CharacterStats.Health.Die;
+using CharacterStats.Die;
 using Enemy.Interface;
 using R3;
 using R3.Triggers;

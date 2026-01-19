@@ -1,8 +1,8 @@
 ﻿using System;
 using Character.Interface;
-using CharacterStats.Health.Interface;
+using CharacterStats.Interface;
 
-namespace CharacterStats.Health
+namespace CharacterStats.Stats
 {
     public class Damage : IDamageable
     {

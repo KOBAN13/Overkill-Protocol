@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Game.Stats.Interface
+namespace CharacterStats.Interface
 {
     public interface IHealthStats
     {

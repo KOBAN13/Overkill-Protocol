@@ -1,4 +1,4 @@
-namespace Game.Stats.Interface
+namespace CharacterStats.Interface
 {
     public interface IStatConfig
     {
