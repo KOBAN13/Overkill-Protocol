@@ -12,16 +12,17 @@ namespace CharacterStats.Impl
         [SerializeField] private List<StatConfig> _configs = new();
         private Dictionary<ECharacterStat, StatConfig> _lookup;
 
-        public IStatConfig GetConfig(ECharacterStat statType)
+        public TConfig GetConfig<TConfig>(ECharacterStat statType) where TConfig : class, IStatConfig
         {
             EnsureLookup();
 
-            if (_lookup.TryGetValue(statType, out var config) && config != null)
-            {
-                return config;
-            }
+            if (!_lookup.TryGetValue(statType, out var config) || config == null)
+                throw new ArgumentException($"Config for {statType} is missing");
+            
+            if (config is TConfig typedConfig)
+                return typedConfig;
 
-            throw new ArgumentException($"Config for {statType} is missing");
+            throw new ArgumentException($"Config for {statType} is not {typeof(TConfig).Name}");
         }
 
         private void EnsureLookup()

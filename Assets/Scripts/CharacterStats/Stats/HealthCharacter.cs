@@ -1,48 +1,43 @@
 ﻿using System;
 using System.Threading;
 using CharacterStats.Die;
-using CharacterStats.Impl;
 using CharacterStats.Interface;
-using Cysharp.Threading.Tasks;
 using Helper;
 using R3;
 using UnityEngine;
 
 namespace CharacterStats.Stats
 {
-    public class HealthCharacter : IHealthStat, ICharacterStatConfig, IDisposable
+    public class HealthCharacter : IHealthStat, IDisposable
     {
         public ECharacterStat StatType => ECharacterStat.Health;
-        public float MaxValue { get; private set; }
         public Observable<float> OnCurrentValueChanged => _currentHealth;
         public ReadOnlyReactiveProperty<float> CurrentHealthPercentage => _amountHealthPercentage;
         public float CurrentHealth => _currentHealth.Value;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private HealthConfig _config;
+        private IHealthConfig _config;
         private IDie _die;
         private bool _isDead;
+        private float _baseValue;
+        private float _maxValue;
         
         private readonly ReactiveProperty<float> _currentHealth = new();
         private readonly ReactiveProperty<float> _amountHealthPercentage = new();
         
-        public void Initialize(IStatConfig config)
+        public void Initialize(IHealthConfig config)
         {
-            if (config is not HealthConfig healthConfig)
-            {
-                throw new ArgumentException("HealthCharacter requires HealthConfig");
-            }
-
-            _config = healthConfig;
+            _config = config ?? throw new ArgumentNullException(nameof(config));
             _isDead = false;
-            MaxValue = _currentHealth.Value = _config.BaseValue;
+            _baseValue = _currentHealth.Value = _config.BaseValue;
+            _maxValue = _config.BaseValue * (1 + _config.MaxBuffHealthInPercentage / 100);
             _amountHealthPercentage.Value = 1f;
         }
         
         public void ResetHealthStat()
         {
             _isDead = false;
-            MaxValue = _currentHealth.Value = _config.BaseValue;
+            _baseValue = _currentHealth.Value = _config.BaseValue;
             _amountHealthPercentage.Value = 1f;
         }
         
@@ -53,44 +48,28 @@ namespace CharacterStats.Stats
             if (_isDead)
                 return;
 
-            _currentHealth.Value = Mathf.Clamp(_currentHealth.Value - value, 0f, MaxValue);
+            _currentHealth.Value = Mathf.Clamp(_currentHealth.Value - value, 0f, _maxValue);
 
-            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value - value / MaxValue, 0f, 1f);
+            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value - value / _baseValue, 0f, 1f);
             
             if (_currentHealth.Value != 0f) 
                 return;
             
             TryDie();
         }
-
-        public async UniTaskVoid AddHealth(float value)
+        
+        public void UpgradeStat()
         {
-            Preconditions.CheckValidateData(value);
-
-            if (_isDead)
-                return;
-
-            _currentHealth.Value = Mathf.Clamp(value + _currentHealth.Value, 0f, MaxValue);
-
-            _amountHealthPercentage.Value = Mathf.Clamp(_currentHealth.Value / MaxValue, 0f, 1f);
+            var buffSpeed = _config.BaseValue * (1 + _config.BuffHealthInPercentage / 100);
             
-            await UniTask.Yield();
+            var updateHealth = Mathf.Clamp(_baseValue + buffSpeed, _baseValue, _maxValue);
+            
+            _currentHealth.Value = updateHealth;
+
+            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value / updateHealth, 0f, 1f);
         }
 
-        public async UniTaskVoid SetHealth(float value)
-        {
-            Preconditions.CheckValidateData(value);
-
-            _currentHealth.Value = Mathf.Clamp(value, 0f, MaxValue);
-
-            _amountHealthPercentage.Value = Mathf.Clamp(_currentHealth.Value / MaxValue, 0f, 1f);
-
-            TryDie();
-            
-            await UniTask.Yield();
-        }
-
-        public void SetDie(IDie die)
+        public void SetDie(IDie die) 
         {
             _die = die;
         }

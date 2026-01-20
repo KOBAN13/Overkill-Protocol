@@ -4,6 +4,6 @@ namespace CharacterStats.Interface
 {
     public interface IStatConfigProvider
     {
-        IStatConfig GetConfig(ECharacterStat statType);
+        TConfig GetConfig<TConfig>(ECharacterStat statType) where TConfig : class, IStatConfig;
     }
 }

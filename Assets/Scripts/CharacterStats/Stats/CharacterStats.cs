@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CharacterStats.Interface;
-using Game.Stats.Interface;
 using Helper;
 using R3;
 
@@ -10,27 +9,24 @@ namespace CharacterStats.Stats
     public class CharacterStats : IDisposable
     {
         private readonly Dictionary<ECharacterStat, ICharacterStat> _characterStats = new();
-        private readonly CompositeDisposable _compositeDisposable = new();
-        private static readonly Subject<Unit> OnAnyCharacterStatChange = new();
         private IStatConfigProvider _configProvider;
-
-        private static readonly Action<float> OnStatValueChanged = _ => OnAnyCharacterStatChange.OnNext(Unit.Default);
-        public Observable<Unit> OnAnyStatChange => OnAnyCharacterStatChange;
         
-        public TStat GetStat<TStat>(ECharacterStat characterStatType) where TStat : class
+        public TStat GetStat<TStat>(ECharacterStat characterStatType) where TStat : class, ICharacterStat
         {
-            if (_characterStats.TryGetValue(characterStatType, out var stat))
-            {
-                return stat as TStat;
-            }
-            
-            return null;
+            return TryGetStat(characterStatType, out TStat stat) ? stat : null;
         }
 
-        public bool TryGetStat<TStat>(ECharacterStat characterStatType, out TStat stat) where TStat : class, ICharacterStat
+        public bool TryGetStat<TStat>(ECharacterStat characterStatType, out TStat stat)
+            where TStat : class, ICharacterStat
         {
-            stat = GetStat<TStat>(characterStatType);
-            return stat != null;
+            if (_characterStats.TryGetValue(characterStatType, out var existing) && existing is TStat typed)
+            {
+                stat = typed;
+                return true;
+            }
+
+            stat = null;
+            return false;
         }
 
         public void SetConfigProvider(IStatConfigProvider configProvider)
@@ -38,21 +34,23 @@ namespace CharacterStats.Stats
             _configProvider = configProvider;
         }
 
-        public void AddStat(ICharacterStatConfig stat)
+        public void AddStat<TConfig>(ICharacterStatConfig<TConfig> stat)
+            where TConfig : class, IStatConfig
         {
-            var config = _configProvider.GetConfig(stat.StatType);
+            var config = _configProvider.GetConfig<TConfig>(stat.StatType);
                 
             AddStat(stat, config);
         }
 
-        public void AddStat(ICharacterStatConfig stat, IStatConfig config)
+        public void AddStat<TConfig>(ICharacterStatConfig<TConfig> stat, TConfig config)
+            where TConfig : class, IStatConfig
         {
             Preconditions.CheckNotNull(stat, nameof(stat));
             Preconditions.CheckNotNull(config, nameof(config));
 
             if (_characterStats.TryGetValue(stat.StatType, out var existing))
             {
-                if (existing is ICharacterStatConfig existingConfig)
+                if (existing is ICharacterStatConfig<TConfig> existingConfig)
                 {
                     existingConfig.Initialize(config);
                     return;
@@ -63,14 +61,11 @@ namespace CharacterStats.Stats
 
             stat.Initialize(config);
             _characterStats.Add(stat.StatType, stat);
-
-            stat.OnCurrentValueChanged
-                .Subscribe(OnStatValueChanged)
-                .AddTo(_compositeDisposable);
         }
 
-        public TStat GetOrAddStat<TStat>(ECharacterStat statType, Func<TStat> create)
-            where TStat : class, ICharacterStatConfig
+        public TStat GetOrAddStat<TStat, TConfig>(ECharacterStat statType, Func<TStat> create)
+            where TStat : class, ICharacterStatConfig<TConfig>
+            where TConfig : class, IStatConfig
         {
             if (_characterStats.TryGetValue(statType, out var existing))
             {
@@ -94,13 +89,12 @@ namespace CharacterStats.Stats
 
         public void Dispose()
         {
-            OnAnyCharacterStatChange.Dispose();
             foreach (var stat in _characterStats.Values)
             {
                 stat.Dispose();
             }
+            
             _characterStats.Clear();
-            _compositeDisposable.Dispose();
         }
     }
 }

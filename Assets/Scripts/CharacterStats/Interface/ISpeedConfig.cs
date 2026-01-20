@@ -1,6 +1,6 @@
 ﻿namespace CharacterStats.Interface
 {
-    public interface IStaminaConfig
+    public interface ISpeedConfig : IStatConfig
     {
         float BaseSpeed { get; }
         float BuffSpeedInPercentage { get; }

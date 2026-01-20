@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CharacterStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(SpeedConfig), menuName = "Stats" + "/" + nameof(SpeedConfig))]
-    public class SpeedConfig : StatConfig, IStaminaConfig
+    public class SpeedConfig : StatConfig, ISpeedConfig
     {
         public override ECharacterStat StatType => ECharacterStat.Speed;
 

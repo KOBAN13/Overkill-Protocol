@@ -1,6 +1,6 @@
 ﻿namespace CharacterStats.Interface
 {
-    public interface IHealthConfig
+    public interface IHealthConfig : IStatConfig
     {
         float BaseValue { get; }
         float BuffHealthInPercentage { get; }
