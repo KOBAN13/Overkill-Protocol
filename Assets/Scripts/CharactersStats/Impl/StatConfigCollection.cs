@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using CharactersStats.Interface;
+using CharacterStats.Impl;
 using CharacterStats.Interface;
 using CharacterStats.Stats;
 using UnityEngine;
 
-namespace CharacterStats.Impl
+namespace CharactersStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(StatConfigCollection), menuName = "Stats" + "/" + nameof(StatConfigCollection))]
     public class StatConfigCollection : ScriptableObject, IStatConfigProvider

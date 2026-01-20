@@ -1,9 +1,10 @@
 ﻿using Bootstrap;
 using Character;
+using CharactersStats.Builder;
+using CharactersStats.Interface;
 using CharacterStats.Stats;
 using Enemy.Factory;
 using Enemy.Pooling;
-using Enemy.Walk;
 using CharactersStats.UpgradeStats;
 using CharacterStats.Interface;
 using Services.Spawners;
@@ -49,13 +50,16 @@ namespace Di
             Container.BindInterfacesAndSelfTo<StatsCollection>()
                 .FromMethod(context =>
                 {
-                    var stats = new StatsCollection();
+                    var builder = new CharacterStatsBuilder();
                     var configProvider = context.Container.ResolveId<IStatConfigProvider>("PlayerStats");
 
+                    var stats = builder
+                        .AddSpeedStat()
+                        .AddHealthStat()
+                        .AddDamageStat()
+                        .Build();
+                    
                     stats.SetConfigProvider(configProvider);
-                    stats.AddStat(new HealthCharacter());
-                    stats.AddStat(new SpeedCharacter());
-                    stats.AddStat(new DamageStat());
 
                     return stats;
                 })

@@ -1,6 +1,6 @@
 ﻿using Character;
 using Character.Config;
-using CharacterStats.Impl;
+using CharactersStats.Impl;
 using Enemy.Config;
 using Enemy.Factory;
 using Services.Config;

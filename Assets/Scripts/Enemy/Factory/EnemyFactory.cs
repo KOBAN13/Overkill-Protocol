@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Character;
+using CharactersStats.Interface;
 using CharacterStats.Stats;
 using CharacterStats.Interface;
 using CharacterStats.Stats;

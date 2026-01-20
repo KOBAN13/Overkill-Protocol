@@ -1,6 +1,7 @@
+using CharacterStats.Interface;
 using CharacterStats.Stats;
 
-namespace CharacterStats.Interface
+namespace CharactersStats.Interface
 {
     public interface IStatConfigProvider
     {
