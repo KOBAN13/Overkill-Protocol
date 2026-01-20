@@ -8,6 +8,5 @@ namespace CharacterStats.Interface
         float CurrentHealth { get; }
         void SetDamage(float value);
         void ResetHealthStat();
-        void UpgradeStat();
     }
 }

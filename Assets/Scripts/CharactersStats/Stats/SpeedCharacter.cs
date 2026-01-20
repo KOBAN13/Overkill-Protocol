@@ -1,4 +1,5 @@
 ﻿using System;
+using CharactersStats.Interface;
 using CharacterStats.Interface;
 using R3;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace CharacterStats.Stats
         public ECharacterStat StatType => ECharacterStat.Speed;
 
         public ReadOnlyReactiveProperty<float> CurrentSpeed => _currentSpeed;
-        
+
         private float _baseValue;
         private float _maxValue;
         private ISpeedConfig _config;
@@ -23,7 +24,7 @@ namespace CharacterStats.Stats
             _maxValue = _config.BaseSpeed * (1 + _config.MaxBuffSpeedInPercentage / 100);
         }
         
-        public void UpdateSpeed()
+        public void UpgradeStat()
         {
             var buffSpeed = _config.BaseSpeed * (1 + _config.BuffSpeedInPercentage / 100);
             

@@ -23,17 +23,17 @@ namespace CharacterStats.Stats
             _maxValue = _config.BaseDamage * (1 + _config.MaxBuffDamageInPercentage / 100);
         }
 
-        public void UpdateDamage()
+        public void Dispose()
+        {
+        }
+
+        public void UpgradeStat()
         {
             var buffDamage = _config.BaseDamage * (1 + _config.BuffDamageInPercentage / 100);
 
             var updateValue = Mathf.Clamp(_baseValue + buffDamage, _baseValue, _maxValue);
 
             _currentDamage.Value = updateValue;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

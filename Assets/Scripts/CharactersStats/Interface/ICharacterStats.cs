@@ -6,5 +6,7 @@ namespace CharacterStats.Interface
     {
         ECharacterStat StatType { get; }
         void Dispose();
+
+        void UpgradeStat();
     }
 }

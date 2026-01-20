@@ -1,5 +1,6 @@
 ﻿using System;
 using Character.Interface;
+using CharacterStats.Interface;
 using R3;
 using UnityEngine;
 using Weapon.Configs;
@@ -13,6 +14,7 @@ namespace Weapon.WeaponType
         [SerializeField] private Transform firePoint;
 
         private WeaponConfig _weaponConfig;
+        private IDamageStat _damageStat;
         private bool _isFired;
 
         [Inject]
@@ -35,10 +37,15 @@ namespace Weapon.WeaponType
             {
                 var damageable = hit.collider.GetComponentInParent<IDamageable>();
 
-                damageable?.TakeDamage(_weaponConfig.Damage);
+                damageable?.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
             }
 
             _isFired = false;
+        }
+
+        public void SetDamageStat(IDamageStat damageStat)
+        {
+            _damageStat = damageStat;
         }
 
         private void OnEnable()

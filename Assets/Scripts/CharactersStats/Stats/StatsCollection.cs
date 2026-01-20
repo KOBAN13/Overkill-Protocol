@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using CharacterStats.Interface;
 using Helper;
-using R3;
 
 namespace CharacterStats.Stats
 {
-    public class CharacterStats : IDisposable
+    public class StatsCollection : IDisposable
     {
         private readonly Dictionary<ECharacterStat, ICharacterStat> _characterStats = new();
         private IStatConfigProvider _configProvider;

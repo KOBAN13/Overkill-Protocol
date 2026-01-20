@@ -1,4 +1,5 @@
 ﻿using CharacterStats.Stats;
+using CharacterStats.Stats;
 using Enemy.Pooling;
 using Enemy.Walk;
 
@@ -8,7 +9,7 @@ namespace Enemy.Factory
     {
         public EnemyRuntime(
             EnemyWalk enemyMove,
-            CharacterStats.Stats.CharacterStats stats,
+            StatsCollection stats,
             HealthCharacter health,
             Damage damage,
             PooledEnemyDie die)
@@ -21,7 +22,7 @@ namespace Enemy.Factory
         }
 
         public EnemyWalk EnemyMove { get; }
-        public CharacterStats.Stats.CharacterStats Stats { get; }
+        public StatsCollection Stats { get; }
         public HealthCharacter Health { get; }
         public Damage Damage { get; }
         public PooledEnemyDie Die { get; }

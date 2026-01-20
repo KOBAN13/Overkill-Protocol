@@ -1,9 +1,10 @@
 ﻿using System;
 using Character.Interface;
+using CharactersStats.Interface;
+using CharacterStats.Stats;
 using Input.Interface;
 using R3;
 using StrategyInstaller;
-using UnityEngine;
 using Weapon.Interface;
 using Zenject;
 
@@ -15,18 +16,21 @@ namespace Character
         private readonly IRotate _rotate;
         private readonly CompositeDisposable _compositeDisposable = new();
         
+        private readonly IUpgradeStats _upgradeStats;
+        private readonly StatsCollection _characterStats;
+        
         private IWeapon _weapon;
-        private CharacterStats.Stats.CharacterStats _characterStats;
         private IInputSystem _input;
         private bool _isFire;
 
-        public Player(IMovable movable, IRotate rotate, CharacterStats.Stats.CharacterStats characterStats)
+        public Player(IMovable movable, IRotate rotate, StatsCollection characterStats, IUpgradeStats upgradeStats, IWeapon weapon)
         {
             _movable = movable;
             _rotate = rotate;
             _characterStats = characterStats;
+            _upgradeStats = upgradeStats;
             
-            
+            SetWeapon(weapon);
         }
         
         public void SetStrategy(IInputSystem strategy)
@@ -67,7 +71,7 @@ namespace Character
 
         public void Tick()
         {
-            _movable.Move(_input.MoveInput, 10f);
+            _movable.Move(_input.MoveInput, _characterStats.GetStat<ISpeedStat>(ECharacterStat.Speed));
         }
     }
 }

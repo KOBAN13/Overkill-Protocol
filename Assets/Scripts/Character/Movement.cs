@@ -1,4 +1,5 @@
 ﻿using Character.Interface;
+using CharactersStats.Interface;
 using UnityEngine;
 using Zenject;
 
@@ -16,10 +17,10 @@ namespace Character
             _playerComponents = playerComponents;
         }
         
-        public void Move(Vector2 input, float speed)
+        public void Move(Vector2 input, ISpeedStat speedStat)
         {
             _input = input;
-            _speed = speed;
+            _speed = speedStat.CurrentSpeed.CurrentValue;
         }
 
         public void Tick()

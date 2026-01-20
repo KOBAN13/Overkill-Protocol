@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Character;
+using CharacterStats.Stats;
 using CharacterStats.Interface;
 using CharacterStats.Stats;
 using Enemy.Config;
@@ -82,7 +83,7 @@ namespace Enemy.Factory
             var die = new PooledEnemyDie(() => Despawn(enemy));
             var health = new HealthCharacter();
             var damage = new Damage(health);
-            var stats = new CharacterStats.Stats.CharacterStats();
+            var stats = new StatsCollection();
 
             runtime = new EnemyRuntime(enemyMove, stats, health, damage, die);
             
@@ -95,7 +96,7 @@ namespace Enemy.Factory
         {
             public EnemyRuntime(
                 EnemyWalk enemyMove,
-                CharacterStats.Stats.CharacterStats stats,
+                StatsCollection stats,
                 HealthCharacter health,
                 Damage damage,
                 PooledEnemyDie die)
@@ -108,7 +109,7 @@ namespace Enemy.Factory
             }
 
             public EnemyWalk EnemyMove { get; }
-            public CharacterStats.Stats.CharacterStats Stats { get; }
+            public StatsCollection Stats { get; }
             public HealthCharacter Health { get; }
             public Damage Damage { get; }
             public PooledEnemyDie Die { get; }
