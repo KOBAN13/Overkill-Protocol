@@ -45,6 +45,9 @@ namespace Enemy.Pooling
         {
             var prefab = _enemyParameters.EnemyPrefab;
             var enemy = _diContainer.InstantiatePrefabForComponent<HumanoidEnemy>(prefab);
+            
+            Debug.Log($"{prefab.name} created");
+            
             return enemy;
         }
 

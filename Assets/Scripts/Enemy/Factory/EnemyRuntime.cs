@@ -1,4 +1,5 @@
-﻿using CharacterStats.Stats;
+﻿using CharactersStats.Stats;
+using CharacterStats.Stats;
 using CharacterStats.Stats;
 using Enemy.Pooling;
 using Enemy.Walk;

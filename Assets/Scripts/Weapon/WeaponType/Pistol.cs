@@ -28,16 +28,19 @@ namespace Weapon.WeaponType
             if(!_isFired) 
                 return;
             
-            var origin = firePoint != null ? firePoint.position : transform.position;
-            var direction = firePoint != null ? firePoint.forward : transform.forward;
+            var origin =  firePoint.position;
+            var direction = firePoint.forward;
             var maxDistance = _weaponConfig.MaxDistance;
             var hitMask = _weaponConfig.HitMask;
 
-            if (Physics.Raycast(origin, direction, out var hit, maxDistance, hitMask, QueryTriggerInteraction.Ignore))
-            {
-                var damageable = hit.collider.GetComponentInParent<IDamageable>();
+            Debug.DrawRay(origin, direction * maxDistance, Color.red, 1f);
 
-                damageable?.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
+            if (Physics.Raycast(origin, direction, out var hit, maxDistance, hitMask, QueryTriggerInteraction.Collide))
+            {
+                if (hit.collider.TryGetComponent(out IDamage damage))
+                {
+                    damage.Damagable.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
+                }
             }
 
             _isFired = false;

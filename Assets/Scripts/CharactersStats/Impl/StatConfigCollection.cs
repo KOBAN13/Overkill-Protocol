@@ -1,40 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CharactersStats.Interface;
 using CharacterStats.Impl;
 using CharacterStats.Interface;
 using CharacterStats.Stats;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
+using Utils.Enums;
 
 namespace CharactersStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(StatConfigCollection), menuName = "Stats" + "/" + nameof(StatConfigCollection))]
-    public class StatConfigCollection : ScriptableObject, IStatConfigProvider
+    public class StatConfigCollection : SerializedScriptableObject, IStatConfigProvider
     {
-        [SerializeField] private List<StatConfig> _configs = new();
-        private Dictionary<ECharacterStat, StatConfig> _lookup;
+        [OdinSerialize] private IReadOnlyDictionary<EStatsOwner, List<StatConfig>> _configs;
 
-        public TConfig GetConfig<TConfig>(ECharacterStat statType) where TConfig : class, IStatConfig
+        public TConfig GetConfig<TConfig>(EStatsOwner statsOwner, ECharacterStat statType) where TConfig : class, IStatConfig
         {
-            EnsureLookup();
-
-            if (!_lookup.TryGetValue(statType, out var config) || config == null)
-                throw new ArgumentException($"Config for {statType} is missing");
+            if (!_configs.TryGetValue(statsOwner, out var configs))
+                throw new ArgumentException($"Configs for {statsOwner} is missing");
+            
+            var config = configs.FirstOrDefault(type => type.StatType == statType);
             
             if (config is TConfig typedConfig)
                 return typedConfig;
 
             throw new ArgumentException($"Config for {statType} is not {typeof(TConfig).Name}");
-        }
-
-        private void EnsureLookup()
-        {
-            _lookup = new Dictionary<ECharacterStat, StatConfig>();
-            
-            foreach (var config in _configs)
-            {
-                _lookup[config.StatType] = config;
-            }
         }
     }
 }

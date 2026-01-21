@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Character;
 using CharactersStats.Interface;
-using CharacterStats.Stats;
-using CharacterStats.Interface;
+using CharactersStats.Stats;
 using CharacterStats.Stats;
 using Enemy.Config;
 using Enemy.Pooling;
 using Enemy.Walk;
 using UnityEngine;
+using Utils.Enums;
 using Zenject;
 
 namespace Enemy.Factory
@@ -42,7 +42,7 @@ namespace Enemy.Factory
 
             var runtime = GetOrCreateRuntime(enemy);
             runtime.Stats.SetConfigProvider(_statConfigProvider);
-            runtime.Stats.AddStat(runtime.Health);
+            runtime.Stats.AddStat(EStatsOwner.Enemy, runtime.Health);
             runtime.Health.SetDie(runtime.Die);
 
             _tickableManager.Add(runtime.EnemyMove);

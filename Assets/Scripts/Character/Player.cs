@@ -1,6 +1,8 @@
 ﻿using System;
 using Character.Interface;
 using CharactersStats.Interface;
+using CharactersStats.Stats;
+using CharacterStats.Interface;
 using CharacterStats.Stats;
 using Input.Interface;
 using R3;
@@ -42,6 +44,7 @@ namespace Character
         {
             _weapon = weapon;
             _isFire = true;
+            _weapon.SetDamageStat(_characterStats.GetStat<IDamageStat>(ECharacterStat.Damage));
         }
 
         public void Dispose()

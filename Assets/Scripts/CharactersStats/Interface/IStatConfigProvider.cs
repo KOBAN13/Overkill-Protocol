@@ -1,10 +1,12 @@
 using CharacterStats.Interface;
 using CharacterStats.Stats;
+using Utils.Enums;
 
 namespace CharactersStats.Interface
 {
     public interface IStatConfigProvider
     {
-        TConfig GetConfig<TConfig>(ECharacterStat statType) where TConfig : class, IStatConfig;
+        public TConfig GetConfig<TConfig>(EStatsOwner statsOwner, ECharacterStat statType)
+            where TConfig : class, IStatConfig;
     }
 }

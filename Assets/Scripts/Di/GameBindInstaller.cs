@@ -2,14 +2,14 @@
 using Character;
 using CharactersStats.Builder;
 using CharactersStats.Interface;
-using CharacterStats.Stats;
+using CharactersStats.Stats;
 using Enemy.Factory;
 using Enemy.Pooling;
 using CharactersStats.UpgradeStats;
-using CharacterStats.Interface;
 using Services.Spawners;
 using Services.StrategyInstaller;
 using UnityEngine;
+using Utils.Enums;
 using Weapon.WeaponType;
 using Zenject;
 
@@ -51,15 +51,14 @@ namespace Di
                 .FromMethod(context =>
                 {
                     var builder = new CharacterStatsBuilder();
-                    var configProvider = context.Container.ResolveId<IStatConfigProvider>("PlayerStats");
-
-                    var stats = builder
-                        .AddSpeedStat()
-                        .AddHealthStat()
-                        .AddDamageStat()
-                        .Build();
+                    var configProvider = context.Container.Resolve<IStatConfigProvider>();
                     
-                    stats.SetConfigProvider(configProvider);
+                    var stats = builder
+                        .AddConfigs(configProvider)
+                        .AddSpeedStat(EStatsOwner.Player)
+                        .AddHealthStat(EStatsOwner.Player)
+                        .AddDamageStat(EStatsOwner.Player)
+                        .Build();
 
                     return stats;
                 })

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using CharactersStats.Interface;
 using CharacterStats.Interface;
+using CharacterStats.Stats;
 using Helper;
+using Utils.Enums;
 
-namespace CharacterStats.Stats
+namespace CharactersStats.Stats
 {
     public class StatsCollection : IDisposable
     {
@@ -34,10 +36,10 @@ namespace CharacterStats.Stats
             _configProvider = configProvider;
         }
 
-        public void AddStat<TConfig>(ICharacterStatConfig<TConfig> stat)
+        public void AddStat<TConfig>(EStatsOwner statsOwner, ICharacterStatConfig<TConfig> stat)
             where TConfig : class, IStatConfig
         {
-            var config = _configProvider.GetConfig<TConfig>(stat.StatType);
+            var config = _configProvider.GetConfig<TConfig>(statsOwner, stat.StatType);
                 
             AddStat(stat, config);
         }
@@ -61,30 +63,6 @@ namespace CharacterStats.Stats
 
             stat.Initialize(config);
             _characterStats.Add(stat.StatType, stat);
-        }
-
-        public TStat GetOrAddStat<TStat, TConfig>(ECharacterStat statType, Func<TStat> create)
-            where TStat : class, ICharacterStatConfig<TConfig>
-            where TConfig : class, IStatConfig
-        {
-            if (_characterStats.TryGetValue(statType, out var existing))
-            {
-                if (existing is TStat typed)
-                {
-                    return typed;
-                }
-
-                throw new ArgumentException($"Stat {statType} already exists with incompatible type");
-            }
-
-            var stat = create();
-            if (stat.StatType != statType)
-            {
-                throw new ArgumentException($"Stat type mismatch. Expected {statType}, got {stat.StatType}");
-            }
-
-            AddStat(stat);
-            return stat;
         }
 
         public void Dispose()

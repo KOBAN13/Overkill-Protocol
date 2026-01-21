@@ -1,4 +1,7 @@
-﻿using CharacterStats.Stats;
+﻿using CharactersStats.Interface;
+using CharactersStats.Stats;
+using CharacterStats.Stats;
+using Utils.Enums;
 
 namespace CharactersStats.Builder
 {
@@ -6,21 +9,27 @@ namespace CharactersStats.Builder
     {
         private readonly StatsCollection _characterStats = new();
 
-        public CharacterStatsBuilder AddHealthStat()
+        public CharacterStatsBuilder AddConfigs(IStatConfigProvider cfgProvider)
         {
-            _characterStats.AddStat(new HealthCharacter());
+            _characterStats.SetConfigProvider(cfgProvider);
+            return this;
+        }
+        
+        public CharacterStatsBuilder AddHealthStat(EStatsOwner statsOwner)
+        {
+            _characterStats.AddStat(statsOwner, new HealthCharacter());
             return this;
         }
 
-        public CharacterStatsBuilder AddSpeedStat()
+        public CharacterStatsBuilder AddSpeedStat(EStatsOwner statsOwner)
         {
-            _characterStats.AddStat(new SpeedCharacter());
+            _characterStats.AddStat(statsOwner, new SpeedCharacter());
             return this;
         }
 
-        public CharacterStatsBuilder AddDamageStat()
+        public CharacterStatsBuilder AddDamageStat(EStatsOwner statsOwner)
         {
-            _characterStats.AddStat(new DamageStat());
+            _characterStats.AddStat(statsOwner, new DamageStat());
             return this;
         }
 

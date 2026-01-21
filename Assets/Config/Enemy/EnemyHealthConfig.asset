@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577cfdefc1ba41d8a69db31ccc2c436e, type: 3}
   m_Name: EnemyHealthConfig
   m_EditorClassIdentifier: 
-  <BaseValue>k__BackingField: 10
+  <BaseValue>k__BackingField: 23
   <BuffHealthInPercentage>k__BackingField: 5
   <MaxBuffHealthInPercentage>k__BackingField: 200
