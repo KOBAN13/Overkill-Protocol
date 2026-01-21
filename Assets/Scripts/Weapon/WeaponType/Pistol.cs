@@ -1,6 +1,7 @@
 ﻿using System;
-using Character.Interface;
 using CharacterStats.Interface;
+using Cysharp.Threading.Tasks;
+using Enemy.Pooling;
 using R3;
 using UnityEngine;
 using Weapon.Configs;
@@ -12,21 +13,31 @@ namespace Weapon.WeaponType
     public class Pistol : MonoBehaviour, IWeapon
     {
         [SerializeField] private Transform firePoint;
+        [SerializeField] private ParticleSystem[] fireParticle;
 
         private WeaponConfig _weaponConfig;
         private IDamageStat _damageStat;
+        private IObjectPool<ParticleSystem> _hitPool;
         private bool _isFired;
 
         [Inject]
-        public void Construct(WeaponConfig config)
+        public void Construct(WeaponConfig config, IObjectPool<ParticleSystem> hitPool)
         {
             _weaponConfig = config;
+            _hitPool = hitPool;
+            
+            _hitPool.Initialize(_weaponConfig.HitVFX);
         }
 
         public void Fire()
         {
             if(!_isFired) 
                 return;
+
+            foreach (var particle in fireParticle)
+            {
+                particle.Play();
+            }
             
             var origin =  firePoint.position;
             var direction = firePoint.forward;
@@ -41,6 +52,23 @@ namespace Weapon.WeaponType
                 {
                     damage.Damagable.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
                 }
+
+                var hitPoint = hit.point;
+                var rotation = Quaternion.LookRotation(hit.normal, Vector3.up);
+                var impactEffect = _hitPool.Get(hitPoint, rotation);
+
+                impactEffect.transform.rotation = rotation;
+                impactEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                impactEffect.Clear(true);
+                impactEffect.Play();
+
+                var main = impactEffect.main;
+                var totalLifetime = main.duration + main.startLifetime.constantMax;
+
+                UniTask.Delay(TimeSpan.FromSeconds(totalLifetime),
+                        cancellationToken: impactEffect.GetCancellationTokenOnDestroy())
+                    .ContinueWith(() => _hitPool.Return(impactEffect))
+                    .Forget();
             }
 
             _isFired = false;

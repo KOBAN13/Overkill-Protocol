@@ -6,9 +6,11 @@ using CharactersStats.Stats;
 using Enemy.Factory;
 using Enemy.Pooling;
 using CharactersStats.UpgradeStats;
+using Enemy;
 using Services.Spawners;
 using Services.StrategyInstaller;
 using UnityEngine;
+using UnityEngine.Pool;
 using Utils.Enums;
 using Weapon.WeaponType;
 using Zenject;
@@ -31,7 +33,8 @@ namespace Di
         {
             Container.BindInterfacesAndSelfTo<StrategyInitializer>().AsSingle();
             Container.BindInterfacesAndSelfTo<PointsCamera>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CustomObjectPool<HumanoidEnemy>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CustomObjectPool<ParticleSystem>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<Pistol>().FromComponentInHierarchy().AsSingle();

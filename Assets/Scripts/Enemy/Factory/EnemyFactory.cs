@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Character;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
+using CharacterStats.Interface;
 using CharacterStats.Stats;
 using Enemy.Config;
 using Enemy.Pooling;
@@ -15,25 +16,32 @@ namespace Enemy.Factory
 {
     public class EnemyFactory : IEnemyFactory, IDisposable
     {
-        private readonly IEnemyPool _enemyPool;
+        private readonly IObjectPool<HumanoidEnemy> _enemyPool;
         private readonly EnemyParameters _enemyParameters;
         private readonly IStatConfigProvider _statConfigProvider;
         private readonly PlayerComponents _playerComponents;
         private readonly TickableManager _tickableManager;
+        private readonly IUpgradeStats _upgradeStats;
         private readonly Dictionary<HumanoidEnemy, EnemyRuntime> _runtime = new();
 
         public EnemyFactory(
-            IEnemyPool enemyPool,
+            IObjectPool<HumanoidEnemy>  enemyPool,
             EnemyParameters enemyParameters,
             PlayerComponents playerComponents,
             TickableManager tickableManager, 
-            IStatConfigProvider statConfigProvider)
+            IStatConfigProvider statConfigProvider,
+            IUpgradeStats upgradeStats)
         {
             _enemyPool = enemyPool;
             _enemyParameters = enemyParameters;
             _playerComponents = playerComponents;
             _tickableManager = tickableManager;
             _statConfigProvider = statConfigProvider;
+            _upgradeStats = upgradeStats;
+
+            var enemy = _enemyParameters.EnemyPrefab.GetComponent<HumanoidEnemy>();
+            
+            _enemyPool.Initialize(enemy);
         }
 
         public HumanoidEnemy Spawn(Vector3 position, Quaternion rotation)
@@ -58,7 +66,7 @@ namespace Enemy.Factory
                 _tickableManager.Remove(runtime.EnemyMove);
             }
 
-            _enemyPool.Release(enemy);
+            _enemyPool.Return(enemy);
         }
 
         public void Dispose()
@@ -81,7 +89,11 @@ namespace Enemy.Factory
             }
 
             var enemyMove = new EnemyWalk(_playerComponents, _enemyParameters.Speed);
-            var die = new PooledEnemyDie(() => Despawn(enemy));
+            var die = new PooledEnemyDie(() =>
+            {
+                _upgradeStats.AddUpgradePoints();
+                Despawn(enemy);
+            });
             var health = new HealthCharacter();
             var damage = new Damage(health);
             var stats = new StatsCollection();

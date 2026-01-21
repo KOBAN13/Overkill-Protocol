@@ -24,13 +24,23 @@ namespace CharacterStats.Stats
             _maxValue = _config.BaseSpeed * (1 + _config.MaxBuffSpeedInPercentage / 100);
         }
         
-        public void UpgradeStat()
+        public void UpgradeStat(int points)
         {
-            var buffSpeed = _config.BaseSpeed * (1 + _config.BuffSpeedInPercentage / 100);
+            var baseSpeed = _config.BaseSpeed;
             
-            var updateValue = Mathf.Clamp(_baseValue + buffSpeed, _baseValue, _maxValue);
+            var perPoint = _config.BuffSpeedInPercentage / 100f;
             
-            _currentSpeed.Value = updateValue;
+            var multiplier = 1f + points * perPoint;
+            var maxMultiplier = _config.MaxBuffSpeedInPercentage / 100f;
+            multiplier = Mathf.Min(multiplier, maxMultiplier);
+    
+            var updatedSpeed = baseSpeed * multiplier;
+            
+            updatedSpeed = Mathf.Clamp(updatedSpeed, _baseValue, _maxValue);
+
+            _currentSpeed.Value = updatedSpeed;
+
+            Debug.Log($"Current speed: {updatedSpeed} (points={points}, x{multiplier:0.###})");
         }
         
         public void Dispose()

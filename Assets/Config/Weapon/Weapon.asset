@@ -17,3 +17,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   <MaxDistance>k__BackingField: 100
+  <HitVFX>k__BackingField: {fileID: 613433886817584984, guid: 3b1d03a747bd31e4fb9d900ceca3fa26,
+    type: 3}

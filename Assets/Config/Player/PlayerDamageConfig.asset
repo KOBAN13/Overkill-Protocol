@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BaseDamage>k__BackingField: 10
   <BuffDamageInPercentage>k__BackingField: 5
-  <MaxBuffDamageInPercentage>k__BackingField: 100
+  <MaxBuffDamageInPercentage>k__BackingField: 200

@@ -18,7 +18,7 @@ namespace Character
         private readonly IRotate _rotate;
         private readonly CompositeDisposable _compositeDisposable = new();
         
-        private readonly IUpgradeStats _upgradeStats;
+        public readonly IUpgradeStats _upgradeStats;
         private readonly StatsCollection _characterStats;
         
         private IWeapon _weapon;

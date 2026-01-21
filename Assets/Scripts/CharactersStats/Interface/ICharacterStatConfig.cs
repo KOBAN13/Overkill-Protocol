@@ -1,3 +1,5 @@
+using CharactersStats.Interface;
+
 namespace CharacterStats.Interface
 {
     public interface ICharacterStatConfig<in TConfig> : ICharacterStat

@@ -1,4 +1,5 @@
-﻿using CharactersStats.Interface;
+﻿using System;
+using CharactersStats.Interface;
 using CharactersStats.Stats;
 using CharacterStats.Stats;
 using CharacterStats.Interface;
@@ -24,14 +25,14 @@ namespace CharactersStats.UpgradeStats
 
         public bool UpgradeStat<TStats>(ECharacterStat characterStat) where TStats : class, ICharacterStat
         {
-            var countUpgradePoints = Mathf.Clamp(_upgradePoints - 1, 0, 100);
+            var countUpgradePoints = Mathf.Clamp(_upgradePoints - 1, 0, int.MaxValue);
             
             if (countUpgradePoints == 0)
                 return false;
             
             var stat = _statsCollection.GetStat<TStats>(characterStat);
             
-            stat.UpgradeStat();
+            stat.UpgradeStat(1);
             
             return true;
         }

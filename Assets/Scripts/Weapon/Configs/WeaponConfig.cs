@@ -8,5 +8,6 @@ namespace Weapon.Configs
         [field: SerializeField] public float SpeedFireInSecond { get; private set; }
         [field: SerializeField] public LayerMask HitMask { get; private set; }
         [field: SerializeField] public float MaxDistance { get; private set; }
+        [field: SerializeField] public ParticleSystem HitVFX { get; private set; }
     }
 }

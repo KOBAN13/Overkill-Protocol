@@ -27,13 +27,24 @@ namespace CharacterStats.Stats
         {
         }
 
-        public void UpgradeStat()
+        public void UpgradeStat(int points)
         {
-            var buffDamage = _config.BaseDamage * (1 + _config.BuffDamageInPercentage / 100);
+            var baseDamage = _config.BaseDamage;
+            
+            var perPoint = _config.BuffDamageInPercentage / 100f;
+            
+            var multiplier = 1f + points * perPoint;
+            var maxMultiplier = _config.MaxBuffDamageInPercentage / 100f;
+            multiplier = Mathf.Min(multiplier, maxMultiplier);
+    
+            var updatedDamage = baseDamage * multiplier;
+            
+            updatedDamage = Mathf.Clamp(updatedDamage, _baseValue, _maxValue);
 
-            var updateValue = Mathf.Clamp(_baseValue + buffDamage, _baseValue, _maxValue);
+            _currentDamage.Value = updatedDamage;
 
-            _currentDamage.Value = updateValue;
+            Debug.Log($"Current damage: {updatedDamage} (points={points}, x{multiplier:0.###})");
         }
+
     }
 }

@@ -58,16 +58,25 @@ namespace CharacterStats.Stats
             TryDie();
         }
         
-        public void UpgradeStat()
+        public void UpgradeStat(int points)
         {
-            var buffSpeed = _config.BaseValue * (1 + _config.BuffHealthInPercentage / 100);
+            var perPoint = _config.BuffHealthInPercentage / 100f; 
+            var multiplier = 1f + points * perPoint;
             
-            var updateHealth = Mathf.Clamp(_baseValue + buffSpeed, _baseValue, _maxValue);
+            var maxMultiplier = _config.MaxBuffHealthInPercentage / 100f;
+            multiplier = Mathf.Min(multiplier, maxMultiplier);
             
-            _currentHealth.Value = updateHealth;
+            var updatedHealth = _baseValue * multiplier;
+            
+            updatedHealth = Mathf.Clamp(updatedHealth, _baseValue, _baseValue * maxMultiplier);
 
-            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value / updateHealth, 0f, 1f);
+            _currentHealth.Value = updatedHealth;
+
+            Debug.Log($"Current health: {updatedHealth} (points={points}, x{multiplier:0.###})");
+            
+            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value / updatedHealth, 0f, 1f);
         }
+
 
         public void SetDie(IDie die) 
         {
