@@ -1,5 +1,6 @@
 ﻿using System;
 using Character.Interface;
+using CharactersStats.Interface;
 using CharacterStats.Interface;
 
 namespace CharacterStats.Stats

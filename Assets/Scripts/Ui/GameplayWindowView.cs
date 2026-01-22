@@ -6,7 +6,9 @@ namespace Ui
 {
     public class GameplayWindowView : MonoBehaviour
     {
-        [field: SerializeField] private Button _openUpgradeWindow;
-        [field: SerializeField] private TMP_Text _playerHealth;
+        [field: SerializeField] public Button OpenUpgradeWindow { get; private set; } 
+        [field: SerializeField] public TMP_Text PlayerHealth { get; private set; }
+
+        public void UpdatePlayerHealth(float health) => PlayerHealth.text = health.ToString("0");
     }
 }

@@ -34,6 +34,9 @@ namespace Di
         {
             Container.BindInterfacesAndSelfTo<UpgradeWindowPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<UpgradeWindowModel>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<GameplayWindowPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameplayWindowModel>().AsSingle();
         }
 
         private void BindServices()

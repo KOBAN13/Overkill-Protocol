@@ -1,6 +1,8 @@
-﻿using Helper;
+﻿using CharacterStats.Stats;
+using Helper;
 using Localization.Configs;
 using R3;
+using Ui.Data;
 using Zenject;
 
 namespace Ui
@@ -17,7 +19,7 @@ namespace Ui
         private readonly ReactiveProperty<string> _applyButtonText = new(string.Empty);
 
         private readonly ReactiveProperty<int> _addUpgradePoints = new();
-        private readonly ReactiveProperty<int> _spentUpgradePoints = new();
+        private readonly ReactiveProperty<UpgradePointData> _spentUpgradePoints = new();
         
         public ReadOnlyReactiveProperty<string> Title => _title;
         public ReadOnlyReactiveProperty<string> PointsLabel => _pointsLabel;
@@ -27,9 +29,8 @@ namespace Ui
         public ReadOnlyReactiveProperty<string> ApplyButtonText => _applyButtonText;
         
         public ReadOnlyReactiveProperty<int> AddUpgradePoints => _addUpgradePoints;
-        public ReadOnlyReactiveProperty<int> SpentUpgradePoints => _spentUpgradePoints;
+        public ReadOnlyReactiveProperty<UpgradePointData> SpentUpgradePoints => _spentUpgradePoints;
         
-
         public UpgradeWindowModel(UpgradeWindowViewTexts texts)
         {
             _texts = texts;
@@ -41,10 +42,10 @@ namespace Ui
             _addUpgradePoints.Value = points;
         }
 
-        public void SpendUpgradePoints(int upgradePoints)
+        public void SpendUpgradePoints(ECharacterStat stat, int upgradePoints)
         {
             Preconditions.CheckValidateData(upgradePoints);
-            _spentUpgradePoints.Value = upgradePoints;
+            _spentUpgradePoints.Value = new UpgradePointData(upgradePoints, stat);
         }
 
         public void Initialize()

@@ -1,5 +1,7 @@
 ﻿using System;
+using CharacterStats.Stats;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace Ui
@@ -14,6 +16,7 @@ namespace Ui
         private int _countHealthPoint = 1;
         private int _countDamagePoint = 1;
         private int _countSpeedPoint = 1;
+        private int _totalUpgradePoints;
         
         public UpgradeWindowPresenter(UpgradeWindowModel model, UpgradeWindowView view)
         {
@@ -26,39 +29,66 @@ namespace Ui
             SubscribeLocalizationText();
             
             _model.AddUpgradePoints.
-                Subscribe(_view.SetCountUpgradePoint)
+                Subscribe(points =>
+                {
+                    _totalUpgradePoints = points;
+                    UpdateRemainingPoints();
+                })
                 .AddTo(_disposables);
 
             SubscribeButtons();
+            UpdateRemainingPoints();
         }
 
         private void SubscribeButtons()
         {
             _view.CloseWindow
                 .OnClickAsObservable()
-                .Subscribe(_ => _view.gameObject.SetActive(false));
+                .Subscribe(_ => _view.gameObject.SetActive(false))
+                .AddTo(_disposables);
+            
+            _view.Apply.OnClickAsObservable()
+                .Subscribe(_ =>
+                {
+                    _model.SpendUpgradePoints(ECharacterStat.Damage, _countDamagePoint);
+                    _model.SpendUpgradePoints(ECharacterStat.Health, _countHealthPoint);
+                    _model.SpendUpgradePoints(ECharacterStat.Speed, _countSpeedPoint);
+                })
+                .AddTo(_disposables);
             
             _view.UpgradeDamage.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
+                    if (GetRemainingPoints() == 0)
+                        return;
+
                     _countDamagePoint++;
                     _view.SetDamageUpdatePoint(_countDamagePoint);
+                    UpdateRemainingPoints();
                 })
                 .AddTo(_disposables);
             
             _view.UpgradeHealth.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
+                    if (GetRemainingPoints() == 0)
+                        return;
+
                     _countHealthPoint++;
                     _view.SetHealthUpdatePoint(_countHealthPoint);
+                    UpdateRemainingPoints();
                 })
                 .AddTo(_disposables);
             
             _view.UpgradeSpeed.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
+                    if (GetRemainingPoints() == 0)
+                        return;
+
                     _countSpeedPoint++;
                     _view.SetSpeedUpdatePoint(_countSpeedPoint);
+                    UpdateRemainingPoints();
                 })
                 .AddTo(_disposables);
         }
@@ -96,7 +126,27 @@ namespace Ui
 
         public void Dispose()
         {
-            
+            _disposables.Dispose();
+            _disposables.Clear();
+        }
+
+        private int GetRemainingPoints()
+        {
+            var reservedPoints = Mathf.Max(0, _countDamagePoint - 1)
+                                 + Mathf.Max(0, _countHealthPoint - 1)
+                                 + Mathf.Max(0, _countSpeedPoint - 1);
+
+            return Mathf.Max(0, _totalUpgradePoints - reservedPoints);
+        }
+
+        private void UpdateRemainingPoints()
+        {
+            var remainingPoints = GetRemainingPoints();
+            _view.SetCountUpgradePoint(remainingPoints);
+            var canUpgrade = remainingPoints > 0;
+            _view.UpgradeDamage.interactable = canUpgrade;
+            _view.UpgradeHealth.interactable = canUpgrade;
+            _view.UpgradeSpeed.interactable = canUpgrade;
         }
     }
 }

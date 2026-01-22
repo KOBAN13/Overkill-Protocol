@@ -1,6 +1,7 @@
-﻿using R3;
+﻿using CharacterStats.Interface;
+using R3;
 
-namespace CharacterStats.Interface
+namespace CharactersStats.Interface
 {
     public interface IHealthStat : ICharacterStatConfig<IHealthConfig>
     {

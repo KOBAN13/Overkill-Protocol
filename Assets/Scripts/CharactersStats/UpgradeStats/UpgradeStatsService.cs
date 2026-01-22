@@ -1,12 +1,16 @@
-﻿using CharactersStats.Interface;
+﻿using System;
+using CharactersStats.Interface;
 using CharactersStats.Stats;
+using CharacterStats.Interface;
 using CharacterStats.Stats;
+using R3;
 using Ui;
 using UnityEngine;
+using Zenject;
 
 namespace CharactersStats.UpgradeStats
 {
-    public class UpgradeStatsService : IUpgradeStats
+    public class UpgradeStatsService : IUpgradeStats, IInitializable
     {
         private readonly StatsCollection _statsCollection;
         private readonly UpgradeWindowModel _upgradeWindowModel;
@@ -17,6 +21,12 @@ namespace CharactersStats.UpgradeStats
         {
             _statsCollection = statsCollection;
             _upgradeWindowModel = upgradeWindowModel;
+        }
+        
+        public void Initialize()
+        {
+            _upgradeWindowModel.SpentUpgradePoints.Skip(1)
+                .Subscribe(data => UpgradeStats(data.Type, data.UpgradePoints));
         }
 
         public void AddUpgradePoints()
@@ -37,6 +47,27 @@ namespace CharactersStats.UpgradeStats
             stat.UpgradeStat(points);
             
             return true;
+        }
+
+        private void UpgradeStats(ECharacterStat characterStat, int points)
+        {
+            switch (characterStat)
+            {
+                case ECharacterStat.Health:
+                    UpgradeStat<IHealthStat>(characterStat, points);
+                    break;
+
+                case ECharacterStat.Damage:
+                    UpgradeStat<IDamageStat>(characterStat, points);
+                    break;
+                
+                case ECharacterStat.Speed:
+                    UpgradeStat<ISpeedStat>(characterStat, points);
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(characterStat), characterStat, null);
+            }
         }
     }
 }

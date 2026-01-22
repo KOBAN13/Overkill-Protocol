@@ -10,6 +10,7 @@ namespace Di
         [SerializeField] private Canvas _canvasView;
 
         [SerializeField] private UpgradeWindowView _upgradeWindowView;
+        [SerializeField] private GameplayWindowView _gameplayWindowView;
         
         public override void InstallBindings()
         {
@@ -18,6 +19,10 @@ namespace Di
             
             Container.BindInterfacesAndSelfTo<UpgradeWindowView>()
                 .FromComponentInNewPrefab(_upgradeWindowView)
+                .UnderTransform(canvasTransform).AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<GameplayWindowView>()
+                .FromComponentInNewPrefab(_gameplayWindowView)
                 .UnderTransform(canvasTransform).AsSingle();
         }
     }

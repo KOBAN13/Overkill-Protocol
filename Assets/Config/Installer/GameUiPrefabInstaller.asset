@@ -16,3 +16,5 @@ MonoBehaviour:
     type: 3}
   _upgradeWindowView: {fileID: 4849476022066477610, guid: 334348db9e564643b4419511dced0505,
     type: 3}
+  _gameplayWindowView: {fileID: 385514179308473059, guid: 01026f507ec0464099dd1e1f29770fd4,
+    type: 3}

@@ -18,3 +18,5 @@ MonoBehaviour:
     type: 2}
   _enemyParameters: {fileID: 11400000, guid: ef7cda25ec848f24a8da9bac9e4bb8d1, type: 2}
   _statsConfig: {fileID: 11400000, guid: 3074dd0aa8cd6414e86578d09417d6e8, type: 2}
+  _upgradeWindowViewTexts: {fileID: 11400000, guid: 5103bed1d40b1e84faade314160f5a43,
+    type: 2}

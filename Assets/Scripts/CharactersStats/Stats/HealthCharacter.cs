@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using CharactersStats.Interface;
 using CharacterStats.Die;
 using CharacterStats.Interface;
 using Helper;
