@@ -8,8 +8,8 @@ using Zenject;
 
 namespace Di
 {
-    [CreateAssetMenu(fileName = "ScriptableObjectInstaller", menuName = "Installers/ScriptableObjectInstaller")]
-    public class ScriptableObjectInstaller : ScriptableObjectInstaller<ScriptableObjectInstaller>
+    [CreateAssetMenu(menuName = "Installers/" + nameof(GameSettingsInstaller), fileName = nameof(GameSettingsInstaller))]
+    public class GameSettingsInstaller : ScriptableObjectInstaller
     {
         [SerializeField] private WeaponConfig _weaponConfig;
         [SerializeField] private PlayerParameters _playerParameters;

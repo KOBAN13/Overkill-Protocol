@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23c9ced4023b4efab239cddd40a29755, type: 3}
-  m_Name: ScriptableObjectInstaller
+  m_Name: GameSettingsInstaller
   m_EditorClassIdentifier: 
   _weaponConfig: {fileID: 11400000, guid: 444b1e0598082f540af4254e0632d828, type: 2}
   _playerParameters: {fileID: 11400000, guid: 07fdf8ae482922c4399298f29b913276, type: 2}
