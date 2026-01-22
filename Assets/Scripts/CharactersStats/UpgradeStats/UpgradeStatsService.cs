@@ -1,8 +1,6 @@
-﻿using System;
-using CharactersStats.Interface;
+﻿using CharactersStats.Interface;
 using CharactersStats.Stats;
 using CharacterStats.Stats;
-using CharacterStats.Interface;
 using UnityEngine;
 
 namespace CharactersStats.UpgradeStats
@@ -23,16 +21,16 @@ namespace CharactersStats.UpgradeStats
             _upgradePoints++;
         }
 
-        public bool UpgradeStat<TStats>(ECharacterStat characterStat) where TStats : class, ICharacterStat
+        public bool UpgradeStat<TStats>(ECharacterStat characterStat, int points) where TStats : class, ICharacterStat
         {
-            var countUpgradePoints = Mathf.Clamp(_upgradePoints - 1, 0, int.MaxValue);
+            var countUpgradePoints = Mathf.Clamp(_upgradePoints - points, 0, int.MaxValue);
             
             if (countUpgradePoints == 0)
                 return false;
             
             var stat = _statsCollection.GetStat<TStats>(characterStat);
             
-            stat.UpgradeStat(1);
+            stat.UpgradeStat(points);
             
             return true;
         }

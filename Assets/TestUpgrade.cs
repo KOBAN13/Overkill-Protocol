@@ -15,7 +15,7 @@ public class TestUpgrade : MonoBehaviour
         {
             Debug.Log("Апдейт здоровья");
             _player._upgradeStats.AddUpgradePoints();
-            var upgradeTrue = _player._upgradeStats.UpgradeStat<IHealthStat>(ECharacterStat.Health);
+            var upgradeTrue = _player._upgradeStats.UpgradeStat<IHealthStat>(ECharacterStat.Health, 3);
             
             Debug.Log("Upgrade is norm: " + upgradeTrue);
         }
@@ -24,7 +24,7 @@ public class TestUpgrade : MonoBehaviour
         {
             Debug.Log("Апдейт дамага");
             _player._upgradeStats.AddUpgradePoints();
-            var upgradeTrue = _player._upgradeStats.UpgradeStat<IDamageStat>(ECharacterStat.Damage);
+            var upgradeTrue = _player._upgradeStats.UpgradeStat<IDamageStat>(ECharacterStat.Damage, 3);
             
             Debug.Log("Upgrade is norm: " + upgradeTrue);
         }
@@ -33,7 +33,7 @@ public class TestUpgrade : MonoBehaviour
         {
             Debug.Log("Апдейт скорости");
             _player._upgradeStats.AddUpgradePoints();
-            var upgradeTrue = _player._upgradeStats.UpgradeStat<ISpeedStat>(ECharacterStat.Speed);
+            var upgradeTrue = _player._upgradeStats.UpgradeStat<ISpeedStat>(ECharacterStat.Speed, 3);
             
             Debug.Log("Upgrade is norm: " + upgradeTrue);
         }
