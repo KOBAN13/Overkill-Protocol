@@ -13,9 +13,9 @@ namespace Ui
 
         private readonly CompositeDisposable _disposables = new();
 
-        private int _countHealthPoint = 1;
-        private int _countDamagePoint = 1;
-        private int _countSpeedPoint = 1;
+        private int _countHealthPoint;
+        private int _countDamagePoint;
+        private int _countSpeedPoint;
         private int _totalUpgradePoints;
         
         public UpgradeWindowPresenter(UpgradeWindowModel model, UpgradeWindowView view)
@@ -53,6 +53,8 @@ namespace Ui
                     _model.SpendUpgradePoints(ECharacterStat.Damage, _countDamagePoint);
                     _model.SpendUpgradePoints(ECharacterStat.Health, _countHealthPoint);
                     _model.SpendUpgradePoints(ECharacterStat.Speed, _countSpeedPoint);
+                    
+                    _view.gameObject.SetActive(false);
                 })
                 .AddTo(_disposables);
             

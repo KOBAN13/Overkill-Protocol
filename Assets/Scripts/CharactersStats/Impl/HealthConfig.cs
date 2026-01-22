@@ -1,8 +1,9 @@
-﻿using CharacterStats.Interface;
+﻿using CharacterStats.Impl;
+using CharacterStats.Interface;
 using CharacterStats.Stats;
 using UnityEngine;
 
-namespace CharacterStats.Impl
+namespace CharactersStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(HealthConfig), menuName = "Stats" + "/" + nameof(HealthConfig))]
     public class HealthConfig : StatConfig, IHealthConfig

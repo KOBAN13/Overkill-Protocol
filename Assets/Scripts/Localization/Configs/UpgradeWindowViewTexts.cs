@@ -16,5 +16,6 @@ namespace Localization.Configs
 
         [field: Header("Buttons")]
         [field: SerializeField] public string ApplyButton { get; private set; }
+        [field: SerializeField] public string OpenUpdateWindowButton { get; private set; }
     }
 }

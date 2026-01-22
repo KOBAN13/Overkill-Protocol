@@ -12,10 +12,15 @@ namespace Ui
         
         private readonly CompositeDisposable _disposables = new();
 
-        public GameplayWindowPresenter(GameplayWindowView gameplayWindowView, GameplayWindowModel gameplayWindowModel)
+        public GameplayWindowPresenter(
+            GameplayWindowView gameplayWindowView,
+            GameplayWindowModel gameplayWindowModel,
+            UpgradeWindowView upgradeWindowView
+        )
         {
             _view = gameplayWindowView;
             _model = gameplayWindowModel;
+            _upgradeWindowView = upgradeWindowView;
         }
         
         public void Initialize()
@@ -26,6 +31,14 @@ namespace Ui
 
             _model.CurrentHealth
                 .Subscribe(_view.UpdatePlayerHealth)
+                .AddTo(_disposables);
+            
+            _model.HealthTitle
+                .Subscribe(_view.UpdateHealthTitle)
+                .AddTo(_disposables);
+            
+            _model.UpgradeWindowText
+                .Subscribe(_view.UpdateTextOpenUpgradeWindow)
                 .AddTo(_disposables);
         }
 

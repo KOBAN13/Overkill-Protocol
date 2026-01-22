@@ -3,16 +3,17 @@ using System.Threading;
 using CharactersStats.Interface;
 using CharacterStats.Die;
 using CharacterStats.Interface;
+using CharacterStats.Stats;
 using Helper;
 using R3;
 using UnityEngine;
 
-namespace CharacterStats.Stats
+namespace CharactersStats.Stats
 {
     public class HealthCharacter : IHealthStat, IDisposable
     {
         public ECharacterStat StatType => ECharacterStat.Health;
-        public Observable<float> OnCurrentValueChanged => _currentHealth;
+        public ReadOnlyReactiveProperty<float> OnCurrentValueChanged => _currentHealth;
         public ReadOnlyReactiveProperty<float> CurrentHealthPercentage => _amountHealthPercentage;
         public float CurrentHealth => _currentHealth.Value;
 

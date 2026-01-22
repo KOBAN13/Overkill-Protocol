@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Character;
+using CharactersStats.Impl;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
+using CharacterStats.Impl;
 using CharacterStats.Interface;
 using CharacterStats.Stats;
 using Enemy.Config;
@@ -11,6 +13,7 @@ using Enemy.Walk;
 using UnityEngine;
 using Utils.Enums;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Enemy.Factory
 {
@@ -50,7 +53,8 @@ namespace Enemy.Factory
 
             var runtime = GetOrCreateRuntime(enemy);
             runtime.Stats.SetConfigProvider(_statConfigProvider);
-            runtime.Stats.AddStat(EStatsOwner.Enemy, runtime.Health);
+            var baseHealthConfig = _statConfigProvider.GetConfig<HealthConfig>(EStatsOwner.Enemy, ECharacterStat.Health);
+            runtime.Stats.AddStat(runtime.Health, baseHealthConfig);
             runtime.Health.SetDie(runtime.Die);
 
             _tickableManager.Add(runtime.EnemyMove);

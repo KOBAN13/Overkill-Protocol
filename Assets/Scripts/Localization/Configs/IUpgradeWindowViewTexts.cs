@@ -8,5 +8,6 @@
         string HealthLabel { get; }
         string SpeedLabel { get; }
         string DamageLabel { get; }
+        string OpenUpdateWindowButton { get; }
     }
 }
