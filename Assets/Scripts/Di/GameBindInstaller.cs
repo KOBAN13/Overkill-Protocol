@@ -9,6 +9,7 @@ using CharactersStats.UpgradeStats;
 using Enemy;
 using Services.Spawners;
 using Services.StrategyInstaller;
+using Ui;
 using UnityEngine;
 using UnityEngine.Pool;
 using Utils.Enums;
@@ -26,7 +27,13 @@ namespace Di
             BindServices();
             BindBootstrap();
             BindPlayer();
-            BindEnemy();
+            BindUi();
+        }
+
+        private void BindUi()
+        {
+            Container.BindInterfacesAndSelfTo<UpgradeWindowPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradeWindowModel>().AsSingle();
         }
 
         private void BindServices()
@@ -38,11 +45,6 @@ namespace Di
             Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<Pistol>().FromComponentInHierarchy().AsSingle();
-        }
-
-        private void BindEnemy()
-        {
-            //Container.BindInterfacesAndSelfTo<EnemyWalk>().AsTransient();
         }
 
         private void BindPlayer()

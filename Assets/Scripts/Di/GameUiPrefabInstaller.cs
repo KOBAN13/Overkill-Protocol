@@ -18,8 +18,7 @@ namespace Di
             
             Container.BindInterfacesAndSelfTo<UpgradeWindowView>()
                 .FromComponentInNewPrefab(_upgradeWindowView)
-                .UnderTransform(canvasTransform).AsSingle()
-                .OnInstantiated((_, o) => ((MonoBehaviour) o).gameObject.SetActive(false));
+                .UnderTransform(canvasTransform).AsSingle();
         }
     }
 }

@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ec2014143540aa8f32ac5d3df12511, type: 3}
   m_Name: UpgradeWindowViewTexts
   m_EditorClassIdentifier: 
-  <Title>k__BackingField: 
-  <PointsLabel>k__BackingField: 
-  <HealthLabel>k__BackingField: 
-  <SpeedLabel>k__BackingField: 
-  <DamageLabel>k__BackingField: 
-  <ApplyButton>k__BackingField: 
-  <CloseButton>k__BackingField: 
-  <UpgradeButton>k__BackingField: 
+  <Title>k__BackingField: "\u0423\u041B\u0423\u0427\u0428\u0415\u041D\u0418\u042F"
+  <PointsLabel>k__BackingField: "\u041E\u0447\u043A\u0438 \u0443\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0439"
+  <HealthLabel>k__BackingField: "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
+  <SpeedLabel>k__BackingField: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C"
+  <DamageLabel>k__BackingField: "\u0423\u0440\u043E\u043D"
+  <ApplyButton>k__BackingField: "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C"

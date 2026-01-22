@@ -97,6 +97,16 @@ MonoBehaviour:
   <UpgradeSpeed>k__BackingField: {fileID: 1000000174}
   <UpgradeDamage>k__BackingField: {fileID: 1000000224}
   <CloseWindow>k__BackingField: {fileID: 1000000034}
+  <CountUpgradeHealth>k__BackingField: {fileID: 1000000113}
+  <CountUpgradeSpeed>k__BackingField: {fileID: 1000000163}
+  <CountUpgradeDamage>k__BackingField: {fileID: 1000000213}
+  <CountUpdatePoints>k__BackingField: {fileID: 1000000073}
+  Title: {fileID: 1000000023}
+  PointsLabel: {fileID: 1000000063}
+  HealthLabel: {fileID: 1000000103}
+  SpeedLabel: {fileID: 1000000153}
+  DamageLabel: {fileID: 1000000203}
+  ApplyButtonText: {fileID: 1000000253}
 --- !u!1 &1000000010
 GameObject:
   m_ObjectHideFlags: 0

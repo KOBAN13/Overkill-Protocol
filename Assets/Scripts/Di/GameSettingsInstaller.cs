@@ -1,6 +1,7 @@
 ﻿using Character.Config;
 using CharactersStats.Impl;
 using Enemy.Config;
+using Localization.Configs;
 using Services.Config;
 using UnityEngine;
 using Weapon.Configs;
@@ -16,6 +17,7 @@ namespace Di
         [SerializeField] private EnemySpawnParameters _enemySpawnParameters;
         [SerializeField] private EnemyParameters _enemyParameters;
         [SerializeField] private StatConfigCollection _statsConfig;
+        [SerializeField] private UpgradeWindowViewTexts _upgradeWindowViewTexts;
         
         public override void InstallBindings()
         {
@@ -23,6 +25,7 @@ namespace Di
             Container.BindInterfacesAndSelfTo<PlayerParameters>().FromScriptableObject(_playerParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawnParameters>().FromScriptableObject(_enemySpawnParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyParameters>().FromScriptableObject(_enemyParameters).AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradeWindowViewTexts>().FromScriptableObject(_upgradeWindowViewTexts).AsSingle();
 
             Container.BindInterfacesAndSelfTo<StatConfigCollection>()
                 .FromScriptableObject(_statsConfig)
