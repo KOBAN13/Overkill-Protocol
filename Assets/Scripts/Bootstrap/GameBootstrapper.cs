@@ -1,7 +1,6 @@
 using Input;
 using Input.Interface;
 using Services.StrategyInstaller;
-using UnityEngine;
 using Zenject;
 
 namespace Bootstrap
@@ -22,10 +21,11 @@ namespace Bootstrap
 
         private void InitializeStrategy()
         {
-            if (Application.isMobilePlatform)
-                _strategyInitializer.SetStrategies<MobileInputSystem, IInputSystem>();
-            else
-                _strategyInitializer.SetStrategies<InputSystemPC, IInputSystem>();
+#if UNITY_ANDROID || UNITY_IOS
+            _strategyInitializer.SetStrategies<MobileInputSystem, IInputSystem>();
+#else
+    _strategyInitializer.SetStrategies<InputSystemPC, IInputSystem>();
+#endif
         }
     }
 }

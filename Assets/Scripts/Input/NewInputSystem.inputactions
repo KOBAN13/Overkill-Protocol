@@ -78,7 +78,7 @@
                     "path": "<Touchscreen>/primaryTouch/delta",
                     "interactions": "",
                     "processors": "ScaleVector2(x=0.01,y=0.01)",
-                    "groups": "Modile",
+                    "groups": "Mobile",
                     "action": "MoveWithWASD",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -117,7 +117,7 @@
                     "path": "<Touchscreen>/primaryTouch/press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Modile",
+                    "groups": "Mobile",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -132,8 +132,8 @@
             "devices": []
         },
         {
-            "name": "Modile",
-            "bindingGroup": "Modile",
+            "name": "Mobile",
+            "bindingGroup": "Mobile",
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",

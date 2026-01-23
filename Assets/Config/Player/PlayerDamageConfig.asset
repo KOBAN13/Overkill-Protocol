@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79f68ddbd8d39c44ab5061137d44b8d, type: 3}
   m_Name: PlayerDamageConfig
   m_EditorClassIdentifier: 
-  <BaseDamage>k__BackingField: 5
+  <BaseDamage>k__BackingField: 1
   <BuffDamageInPercentage>k__BackingField: 5
   <MaxBuffDamageInPercentage>k__BackingField: 200

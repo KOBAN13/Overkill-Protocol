@@ -30,7 +30,15 @@ namespace Input
 
         public void Tick()
         {
-            MoveInput = _input.Move.MoveWithWASD.ReadValue<Vector2>();
+            var touch = Touchscreen.current.primaryTouch;
+            
+            if (touch == null || !touch.press.isPressed)
+            {
+                MoveInput = Vector2.zero;
+                return;
+            }
+
+            MoveInput = touch.delta.ReadValue() * 0.01f;
         }
 
         private void OnFire(InputAction.CallbackContext context)

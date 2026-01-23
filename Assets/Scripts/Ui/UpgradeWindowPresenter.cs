@@ -52,7 +52,7 @@ namespace Ui
         {
             _view.CloseWindow
                 .OnClickAsObservable()
-                .Subscribe(_ => _view.gameObject.SetActive(false))
+                .Subscribe(_ => _view.CanvasGroup.alpha = 0)
                 .AddTo(_disposables);
             
             _view.Apply.OnClickAsObservable()
@@ -147,12 +147,6 @@ namespace Ui
                 .AddTo(_disposables);
         }
 
-        public void Dispose()
-        {
-            _disposables.Dispose();
-            _disposables.Clear();
-        }
-
         private void InitializeCounters()
         {
             _countHealthPoint = BaseUpgradeLevel;
@@ -184,6 +178,12 @@ namespace Ui
             _view.UpgradeDamage.interactable = canUpgrade;
             _view.UpgradeHealth.interactable = canUpgrade;
             _view.UpgradeSpeed.interactable = canUpgrade;
+        }
+        
+        public void Dispose()
+        {
+            _disposables.Dispose();
+            _disposables.Clear();
         }
     }
 }

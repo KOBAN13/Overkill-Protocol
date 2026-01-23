@@ -26,7 +26,11 @@ namespace Ui
         public void Initialize()
         {
             _view.OpenUpgradeWindow.OnClickAsObservable()
-                .Subscribe(_ => _upgradeWindowView.gameObject.SetActive(true))
+                .Subscribe(_ =>
+                {
+                    _upgradeWindowView.CanvasGroup.alpha = 1;
+                    _view.CanvasGroup.alpha = 0;
+                })
                 .AddTo(_disposables);
 
             _model.CurrentHealth
@@ -44,7 +48,8 @@ namespace Ui
 
         public void Dispose()
         {
-            
+            _disposables.Dispose();
+            _disposables.Clear();
         }
     }
 }

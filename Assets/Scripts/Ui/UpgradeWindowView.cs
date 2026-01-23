@@ -27,6 +27,9 @@ namespace Ui
         [field: SerializeField] private TMP_Text DamageLabel;
         [field: SerializeField] private TMP_Text ApplyButtonText;
         
+        [field: Header("UI Components")]
+        [field: SerializeField] public CanvasGroup CanvasGroup { get; private set; }
+        
         public void UpdateTitleText(string title) => Title.text = title;
         public void UpdatePointsLabel(string label) => PointsLabel.text = label;
         public void UpdateHealthLabel(string label) => HealthLabel.text = label;

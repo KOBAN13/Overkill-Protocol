@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 1000000002}
   - component: {fileID: 1000000003}
   - component: {fileID: 4849476022066477610}
+  - component: {fileID: 4111688923221342730}
   m_Layer: 5
   m_Name: UpgradeWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1000000001
 RectTransform:
   m_ObjectHideFlags: 0
@@ -107,6 +108,19 @@ MonoBehaviour:
   SpeedLabel: {fileID: 1000000153}
   DamageLabel: {fileID: 1000000203}
   ApplyButtonText: {fileID: 1000000253}
+  <CanvasGroup>k__BackingField: {fileID: 4111688923221342730}
+--- !u!225 &4111688923221342730
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000000000}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1000000010
 GameObject:
   m_ObjectHideFlags: 0

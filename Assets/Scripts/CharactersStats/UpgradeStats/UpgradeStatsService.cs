@@ -1,5 +1,4 @@
-﻿using System;
-using CharactersStats.Interface;
+﻿using CharactersStats.Interface;
 using CharactersStats.Stats;
 using CharacterStats.Interface;
 using CharacterStats.Stats;
@@ -17,6 +16,7 @@ namespace CharactersStats.UpgradeStats
         private readonly UpgradeWindowModel _upgradeWindowModel;
 
         private int _upgradePoints;
+        
         private readonly Dictionary<ECharacterStat, int> _spentPoints = new();
 
         public UpgradeStatsService(StatsCollection statsCollection, UpgradeWindowModel upgradeWindowModel)
@@ -45,7 +45,7 @@ namespace CharactersStats.UpgradeStats
             if (_upgradePoints < points)
                 return false;
 
-            var currentSpent = _spentPoints.TryGetValue(characterStat, out var value) ? value : 0;
+            var currentSpent = _spentPoints.GetValueOrDefault(characterStat, 0);
             var totalSpent = currentSpent + points;
             _spentPoints[characterStat] = totalSpent;
             

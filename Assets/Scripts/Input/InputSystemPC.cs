@@ -15,7 +15,6 @@ namespace Input
         
         private readonly Subject<Unit> _onClick = new();
         private readonly NewInputSystem _input;
-        private readonly CompositeDisposable _compositeDisposable = new();
 
         public InputSystemPC(NewInputSystem input)
         {
@@ -52,8 +51,6 @@ namespace Input
             _input.Mouse.Fire.performed -= OnFire;
             _input.Disable();
             _input.Dispose();
-            _compositeDisposable.Clear();
-            _compositeDisposable.Dispose();
         }
     }
 }

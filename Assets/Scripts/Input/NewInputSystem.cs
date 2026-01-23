@@ -164,7 +164,7 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
                     ""path"": ""<Touchscreen>/primaryTouch/delta"",
                     ""interactions"": """",
                     ""processors"": ""ScaleVector2(x=0.01,y=0.01)"",
-                    ""groups"": ""Modile"",
+                    ""groups"": ""Mobile"",
                     ""action"": ""MoveWithWASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -203,7 +203,7 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
                     ""path"": ""<Touchscreen>/primaryTouch/press"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Modile"",
+                    ""groups"": ""Mobile"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -218,8 +218,8 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
             ""devices"": []
         },
         {
-            ""name"": ""Modile"",
-            ""bindingGroup"": ""Modile"",
+            ""name"": ""Mobile"",
+            ""bindingGroup"": ""Mobile"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Touchscreen>"",
@@ -518,17 +518,17 @@ public partial class @NewInputSystem: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_PCSchemeIndex];
         }
     }
-    private int m_ModileSchemeIndex = -1;
+    private int m_MobileSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
     /// </summary>
     /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme ModileScheme
+    public InputControlScheme MobileScheme
     {
         get
         {
-            if (m_ModileSchemeIndex == -1) m_ModileSchemeIndex = asset.FindControlSchemeIndex("Modile");
-            return asset.controlSchemes[m_ModileSchemeIndex];
+            if (m_MobileSchemeIndex == -1) m_MobileSchemeIndex = asset.FindControlSchemeIndex("Mobile");
+            return asset.controlSchemes[m_MobileSchemeIndex];
         }
     }
     /// <summary>
