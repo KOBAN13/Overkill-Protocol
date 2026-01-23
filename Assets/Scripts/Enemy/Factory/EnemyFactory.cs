@@ -68,13 +68,13 @@ namespace Enemy.Factory
         {
             if (_runtime.TryGetValue(enemy, out var runtime))
             {
-                if (_activeEnemies.Remove(enemy))
-                {
-                    _tickableManager.Remove(runtime.EnemyMove);
-                }
-            }
+                if (!_activeEnemies.Remove(enemy))
+                    return;
 
-            _enemyPool.Return(enemy);
+                _tickableManager.Remove(runtime.EnemyMove);
+                _enemyPool.Return(enemy);
+                return;
+            }
         }
 
         public void Dispose()
@@ -84,13 +84,13 @@ namespace Enemy.Factory
                 if (_runtime.TryGetValue(enemy, out var runtime))
                 {
                     _tickableManager.Remove(runtime.EnemyMove);
+                    _enemyPool.Return(enemy);
                 }
             }
 
             foreach (var entry in _runtime)
             {
                 entry.Value.Stats.Dispose();
-                _enemyPool.Release(entry.Key);
             }
 
             _runtime.Clear();
