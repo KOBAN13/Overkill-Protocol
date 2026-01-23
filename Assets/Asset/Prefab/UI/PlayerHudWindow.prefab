@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OpenUpgradeWindow>k__BackingField: {fileID: 1100000034}
   <PlayerHealth>k__BackingField: {fileID: 1100000028}
+  <HealthTitle>k__BackingField: {fileID: 1100000023}
+  <OpenUpgradeWindowText>k__BackingField: {fileID: 1100000043}
 --- !u!1 &1100000010
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using CharactersStats.Impl;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
 using CharacterStats.Impl;
-using CharacterStats.Interface;
 using CharacterStats.Stats;
 using Enemy.Config;
 using Enemy.Pooling;
@@ -54,7 +53,9 @@ namespace Enemy.Factory
             var runtime = GetOrCreateRuntime(enemy);
             runtime.Stats.SetConfigProvider(_statConfigProvider);
             var baseHealthConfig = _statConfigProvider.GetConfig<HealthConfig>(EStatsOwner.Enemy, ECharacterStat.Health);
-            runtime.Stats.AddStat(runtime.Health, baseHealthConfig);
+            var randomizedBaseHealth = GetRandomizedStartHealth();
+            var randomizedHealthConfig = new RandomizedHealthConfig(baseHealthConfig, randomizedBaseHealth);
+            runtime.Stats.AddStat(runtime.Health, randomizedHealthConfig);
             runtime.Health.SetDie(runtime.Die);
 
             _tickableManager.Add(runtime.EnemyMove);
@@ -107,6 +108,13 @@ namespace Enemy.Factory
             _runtime.Add(enemy, runtime);
 
             return runtime;
+        }
+
+        private int GetRandomizedStartHealth()
+        {
+            var min = Mathf.Min(_enemyParameters.MinStartHealth, _enemyParameters.MaxStartHealth);
+            var max = Mathf.Max(_enemyParameters.MinStartHealth, _enemyParameters.MaxStartHealth);
+            return Random.Range(min, max + 1);
         }
 
         private sealed class EnemyRuntime

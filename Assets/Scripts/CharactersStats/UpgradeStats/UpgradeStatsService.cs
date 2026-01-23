@@ -7,6 +7,7 @@ using R3;
 using Ui;
 using UnityEngine;
 using Zenject;
+using System.Collections.Generic;
 
 namespace CharactersStats.UpgradeStats
 {
@@ -16,6 +17,7 @@ namespace CharactersStats.UpgradeStats
         private readonly UpgradeWindowModel _upgradeWindowModel;
 
         private int _upgradePoints;
+        private readonly Dictionary<ECharacterStat, int> _spentPoints = new();
 
         public UpgradeStatsService(StatsCollection statsCollection, UpgradeWindowModel upgradeWindowModel)
         {
@@ -25,7 +27,7 @@ namespace CharactersStats.UpgradeStats
         
         public void Initialize()
         {
-            _upgradeWindowModel.SpentUpgradePoints.Skip(1)
+            _upgradeWindowModel.SpentUpgradePoints
                 .Subscribe(data => UpgradeStats(data.Type, data.UpgradePoints));
         }
 
@@ -37,14 +39,22 @@ namespace CharactersStats.UpgradeStats
 
         public bool UpgradeStat<TStats>(ECharacterStat characterStat, int points) where TStats : class, ICharacterStat
         {
-            var countUpgradePoints = Mathf.Clamp(_upgradePoints - points, 0, int.MaxValue);
-            
-            if (countUpgradePoints == 0)
+            if (points <= 0)
                 return false;
+
+            if (_upgradePoints < points)
+                return false;
+
+            var currentSpent = _spentPoints.TryGetValue(characterStat, out var value) ? value : 0;
+            var totalSpent = currentSpent + points;
+            _spentPoints[characterStat] = totalSpent;
             
             var stat = _statsCollection.GetStat<TStats>(characterStat);
             
-            stat.UpgradeStat(points);
+            stat.UpgradeStat(totalSpent);
+
+            _upgradePoints = Mathf.Max(0, _upgradePoints - points);
+            _upgradeWindowModel.AddUpdatePoint(_upgradePoints);
             
             return true;
         }
@@ -64,9 +74,6 @@ namespace CharactersStats.UpgradeStats
                 case ECharacterStat.Speed:
                     UpgradeStat<ISpeedStat>(characterStat, points);
                     break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(characterStat), characterStat, null);
             }
         }
     }

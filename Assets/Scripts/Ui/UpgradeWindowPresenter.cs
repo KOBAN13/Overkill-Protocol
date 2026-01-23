@@ -8,6 +8,8 @@ namespace Ui
 {
     public class UpgradeWindowPresenter : IInitializable, IDisposable
     {
+        private const int BaseUpgradeLevel = 1;
+
         private readonly UpgradeWindowModel _model;
         private readonly UpgradeWindowView _view;
 
@@ -16,7 +18,12 @@ namespace Ui
         private int _countHealthPoint;
         private int _countDamagePoint;
         private int _countSpeedPoint;
+        
         private int _totalUpgradePoints;
+        
+        private int _appliedHealthPoint;
+        private int _appliedDamagePoint;
+        private int _appliedSpeedPoint;
         
         public UpgradeWindowPresenter(UpgradeWindowModel model, UpgradeWindowView view)
         {
@@ -27,6 +34,7 @@ namespace Ui
         public void Initialize()
         {
             SubscribeLocalizationText();
+            InitializeCounters();
             
             _model.AddUpgradePoints.
                 Subscribe(points =>
@@ -50,9 +58,22 @@ namespace Ui
             _view.Apply.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    _model.SpendUpgradePoints(ECharacterStat.Damage, _countDamagePoint);
-                    _model.SpendUpgradePoints(ECharacterStat.Health, _countHealthPoint);
-                    _model.SpendUpgradePoints(ECharacterStat.Speed, _countSpeedPoint);
+                    var damageDelta = Mathf.Max(0, _countDamagePoint - _appliedDamagePoint);
+                    var healthDelta = Mathf.Max(0, _countHealthPoint - _appliedHealthPoint);
+                    var speedDelta = Mathf.Max(0, _countSpeedPoint - _appliedSpeedPoint);
+
+                    if (damageDelta > 0)
+                        _model.SpendUpgradePoints(ECharacterStat.Damage, damageDelta);
+
+                    if (healthDelta > 0)
+                        _model.SpendUpgradePoints(ECharacterStat.Health, healthDelta);
+
+                    if (speedDelta > 0)
+                        _model.SpendUpgradePoints(ECharacterStat.Speed, speedDelta);
+
+                    _appliedDamagePoint = _countDamagePoint;
+                    _appliedHealthPoint = _countHealthPoint;
+                    _appliedSpeedPoint = _countSpeedPoint;
                     
                     _view.gameObject.SetActive(false);
                 })
@@ -132,11 +153,25 @@ namespace Ui
             _disposables.Clear();
         }
 
+        private void InitializeCounters()
+        {
+            _countHealthPoint = BaseUpgradeLevel;
+            _countDamagePoint = BaseUpgradeLevel;
+            _countSpeedPoint = BaseUpgradeLevel;
+            _appliedHealthPoint = BaseUpgradeLevel;
+            _appliedDamagePoint = BaseUpgradeLevel;
+            _appliedSpeedPoint = BaseUpgradeLevel;
+
+            _view.SetHealthUpdatePoint(_countHealthPoint);
+            _view.SetDamageUpdatePoint(_countDamagePoint);
+            _view.SetSpeedUpdatePoint(_countSpeedPoint);
+        }
+
         private int GetRemainingPoints()
         {
-            var reservedPoints = Mathf.Max(0, _countDamagePoint - 1)
-                                 + Mathf.Max(0, _countHealthPoint - 1)
-                                 + Mathf.Max(0, _countSpeedPoint - 1);
+            var reservedPoints = Mathf.Max(0, _countDamagePoint - _appliedDamagePoint)
+                                 + Mathf.Max(0, _countHealthPoint - _appliedHealthPoint)
+                                 + Mathf.Max(0, _countSpeedPoint - _appliedSpeedPoint);
 
             return Mathf.Max(0, _totalUpgradePoints - reservedPoints);
         }
