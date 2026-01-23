@@ -1,5 +1,4 @@
-using CharacterStats.Interface;
-using CharacterStats.Stats;
+using CharactersStats.Stats;
 using Utils.Enums;
 
 namespace CharactersStats.Interface

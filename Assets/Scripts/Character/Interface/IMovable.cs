@@ -1,5 +1,4 @@
 ﻿using CharactersStats.Interface;
-using CharacterStats.Interface;
 using UnityEngine;
 
 namespace Character.Interface

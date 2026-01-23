@@ -1,4 +1,4 @@
-﻿using CharacterStats.Interface;
+﻿using CharactersStats.Interface;
 
 namespace Weapon.Interface
 {

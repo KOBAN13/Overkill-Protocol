@@ -1,7 +1,5 @@
 ﻿using CharactersStats.Interface;
 using CharactersStats.Stats;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
 using R3;
 using Ui;
 using UnityEngine;

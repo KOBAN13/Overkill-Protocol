@@ -1,4 +1,4 @@
-﻿namespace CharacterStats.Die
+﻿namespace CharactersStats.Die
 {
     public interface IDie
     {

@@ -2,8 +2,6 @@
 using Character.Interface;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
 using Input.Interface;
 using R3;
 using StrategyInstaller;

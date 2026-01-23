@@ -1,10 +1,9 @@
 ﻿using System;
 using CharactersStats.Interface;
-using CharacterStats.Interface;
 using R3;
 using UnityEngine;
 
-namespace CharacterStats.Stats
+namespace CharactersStats.Stats
 {
     public class SpeedCharacter : ISpeedStat
     {

@@ -1,4 +1,4 @@
-namespace CharacterStats.Stats
+namespace CharactersStats.Stats
 {
     public enum ECharacterStat
     {

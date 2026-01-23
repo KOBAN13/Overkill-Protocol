@@ -1,5 +1,5 @@
-﻿using CharacterStats.Interface;
-using CharacterStats.Stats;
+﻿using CharactersStats.Interface;
+using CharactersStats.Stats;
 
 namespace CharactersStats.Impl
 {

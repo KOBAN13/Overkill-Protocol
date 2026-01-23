@@ -1,7 +1,6 @@
 using Character;
 using CharactersStats.Interface;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
+using CharactersStats.Stats;
 using UnityEngine;
 using Zenject;
 

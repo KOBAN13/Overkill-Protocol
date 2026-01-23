@@ -1,6 +1,6 @@
 ﻿using R3;
 
-namespace CharacterStats.Interface
+namespace CharactersStats.Interface
 {
     public interface IDamageStat : ICharacterStatConfig<IDamageConfig>
     {

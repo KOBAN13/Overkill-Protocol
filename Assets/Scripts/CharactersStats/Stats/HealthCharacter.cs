@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading;
+using CharactersStats.Die;
 using CharactersStats.Interface;
-using CharacterStats.Die;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
 using Helper;
 using R3;
 using UnityEngine;

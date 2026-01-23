@@ -1,6 +1,5 @@
-﻿using CharacterStats.Impl;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
+﻿using CharactersStats.Interface;
+using CharactersStats.Stats;
 using UnityEngine;
 
 namespace CharactersStats.Impl

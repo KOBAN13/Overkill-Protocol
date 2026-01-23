@@ -1,4 +1,4 @@
-﻿using CharacterStats.Stats;
+﻿using CharactersStats.Stats;
 
 namespace Ui.Data
 {

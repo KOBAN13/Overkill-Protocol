@@ -1,5 +1,4 @@
-﻿using CharacterStats.Interface;
-using R3;
+﻿using R3;
 
 namespace CharactersStats.Interface
 {

@@ -1,9 +1,9 @@
 ﻿using Character.Interface;
 
-namespace CharacterStats.Interface
+namespace CharactersStats.Interface
 {
     public interface IDamage
     {
-        IDamageable Damagable { get; }
+        IDamageable Damageable { get; }
     }
 }

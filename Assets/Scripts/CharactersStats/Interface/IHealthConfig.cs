@@ -1,4 +1,4 @@
-﻿namespace CharacterStats.Interface
+﻿namespace CharactersStats.Interface
 {
     public interface IHealthConfig : IStatConfig
     {

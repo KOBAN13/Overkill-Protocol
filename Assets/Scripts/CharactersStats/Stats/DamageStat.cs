@@ -1,9 +1,9 @@
 ﻿using System;
-using CharacterStats.Interface;
+using CharactersStats.Interface;
 using R3;
 using UnityEngine;
 
-namespace CharacterStats.Stats
+namespace CharactersStats.Stats
 {
     public class DamageStat : IDamageStat
     {

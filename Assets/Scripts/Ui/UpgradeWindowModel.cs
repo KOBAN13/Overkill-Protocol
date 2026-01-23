@@ -1,4 +1,4 @@
-﻿using CharacterStats.Stats;
+﻿using CharactersStats.Stats;
 using Helper;
 using Localization.Configs;
 using R3;

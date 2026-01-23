@@ -1,8 +1,8 @@
-﻿using CharacterStats.Interface;
-using CharacterStats.Stats;
+﻿using CharactersStats.Interface;
+using CharactersStats.Stats;
 using UnityEngine;
 
-namespace CharacterStats.Impl
+namespace CharactersStats.Impl
 {
     [CreateAssetMenu(fileName = nameof(DamageConfig), menuName = "Stats" + "/" + nameof(DamageConfig))]
     public class DamageConfig : StatConfig, IDamageConfig

@@ -1,6 +1,5 @@
 ﻿using CharactersStats.Interface;
 using CharactersStats.Stats;
-using CharacterStats.Stats;
 using Utils.Enums;
 
 namespace CharactersStats.Builder

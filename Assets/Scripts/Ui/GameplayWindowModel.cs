@@ -1,8 +1,6 @@
 ﻿using System;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
 using Localization.Configs;
 using R3;
 using Zenject;

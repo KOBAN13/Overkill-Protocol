@@ -1,5 +1,5 @@
 ﻿using System;
-using CharacterStats.Interface;
+using CharactersStats.Interface;
 using Cysharp.Threading.Tasks;
 using Enemy.Pooling;
 using R3;
@@ -50,7 +50,7 @@ namespace Weapon.WeaponType
             {
                 if (hit.collider.TryGetComponent(out IDamage damage))
                 {
-                    damage.Damagable.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
+                    damage.Damageable.TakeDamage(_damageStat.CurrentDamage.CurrentValue);
                 }
 
                 var hitPoint = hit.point;

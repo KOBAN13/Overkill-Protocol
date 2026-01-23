@@ -1,5 +1,5 @@
 ﻿using Character.Interface;
-using CharacterStats.Interface;
+using CharactersStats.Interface;
 using Enemy.Interface;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,14 +14,14 @@ namespace Enemy
         
         private IEnemyMove _enemyMove;
         private bool _isInitialized;
-        public IDamageable Damagable { get; private set; }
+        public IDamageable Damageable { get; private set; }
         
         //TODO
         public IKill Kill { get; private set; }
 
         public void InitEnemy(IDamageable damageable, IEnemyMove enemyMove)
         {
-            Damagable = damageable;
+            Damageable = damageable;
             _enemyMove = enemyMove;
             
             _enemyMove.InitMove(_agent);

@@ -1,7 +1,7 @@
 ﻿using Helper;
 using UnityEngine;
 
-namespace CharacterStats.Die
+namespace CharactersStats.Die
 {
     public class Die : IDie
     {

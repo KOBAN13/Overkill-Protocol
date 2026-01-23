@@ -4,8 +4,6 @@ using Character;
 using CharactersStats.Impl;
 using CharactersStats.Interface;
 using CharactersStats.Stats;
-using CharacterStats.Impl;
-using CharacterStats.Stats;
 using Enemy.Config;
 using Enemy.Pooling;
 using Enemy.Walk;

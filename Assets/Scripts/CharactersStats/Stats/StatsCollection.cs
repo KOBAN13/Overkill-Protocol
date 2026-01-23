@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CharactersStats.Interface;
-using CharacterStats.Interface;
-using CharacterStats.Stats;
 using Helper;
 using Utils.Enums;
 
