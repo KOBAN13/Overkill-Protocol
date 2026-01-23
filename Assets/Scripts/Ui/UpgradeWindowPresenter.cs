@@ -12,6 +12,7 @@ namespace Ui
 
         private readonly UpgradeWindowModel _model;
         private readonly UpgradeWindowView _view;
+        private readonly GameplayWindowView _gameplayWindow;
 
         private readonly CompositeDisposable _disposables = new();
 
@@ -25,10 +26,15 @@ namespace Ui
         private int _appliedDamagePoint;
         private int _appliedSpeedPoint;
         
-        public UpgradeWindowPresenter(UpgradeWindowModel model, UpgradeWindowView view)
+        public UpgradeWindowPresenter(
+            UpgradeWindowModel model, 
+            UpgradeWindowView view, 
+            GameplayWindowView gameplayWindow
+        )
         {
             _model = model;
             _view = view;
+            _gameplayWindow = gameplayWindow;
         }
 
         public void Initialize()
@@ -52,7 +58,11 @@ namespace Ui
         {
             _view.CloseWindow
                 .OnClickAsObservable()
-                .Subscribe(_ => _view.CanvasGroup.alpha = 0)
+                .Subscribe(_ =>
+                {
+                    _view.CanvasGroup.alpha = 0;
+                    _gameplayWindow.CanvasGroup.alpha = 1;
+                })
                 .AddTo(_disposables);
             
             _view.Apply.OnClickAsObservable()
@@ -74,8 +84,9 @@ namespace Ui
                     _appliedDamagePoint = _countDamagePoint;
                     _appliedHealthPoint = _countHealthPoint;
                     _appliedSpeedPoint = _countSpeedPoint;
-                    
-                    _view.gameObject.SetActive(false);
+
+                    _view.CanvasGroup.alpha = 0;
+                    _gameplayWindow.CanvasGroup.alpha = 1;
                 })
                 .AddTo(_disposables);
             
