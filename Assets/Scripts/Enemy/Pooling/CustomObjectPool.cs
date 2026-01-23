@@ -40,6 +40,9 @@ namespace Enemy.Pooling
         
         private static void OnRelease(T obj)
         {
+            if (obj != null)
+                return;
+            
             obj.gameObject.SetActive(false);
         }
         

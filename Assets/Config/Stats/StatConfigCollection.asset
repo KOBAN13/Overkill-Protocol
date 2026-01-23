@@ -16,9 +16,9 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 35eebc52d32227446a1483b0cd4e5773, type: 2}
     - {fileID: 11400000, guid: b7cf665b332f89c4a9d2d2e93499158b, type: 2}
     - {fileID: 11400000, guid: b580ce3d798dd8944a9f5a431f8d28fd, type: 2}
-    - {fileID: 11400000, guid: 35eebc52d32227446a1483b0cd4e5773, type: 2}
     - {fileID: 11400000, guid: 5bda3b4a1b4f4c2c9a97a681b2a6a2d6, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _configs
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Utils.Enums.EStatsOwner, Assembly-CSharp],[System.Collections.Generic.List`1[[CharacterStats.Impl.StatConfig,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Utils.Enums.EStatsOwner, Assembly-CSharp],[System.Collections.Generic.List`1[[CharactersStats.Impl.StatConfig,
         Assembly-CSharp]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
@@ -53,7 +53,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[CharacterStats.Impl.StatConfig,
+      Data: 2|System.Collections.Generic.List`1[[CharactersStats.Impl.StatConfig,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -84,7 +84,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[CharacterStats.Impl.StatConfig,
+      Data: 3|System.Collections.Generic.List`1[[CharactersStats.Impl.StatConfig,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12

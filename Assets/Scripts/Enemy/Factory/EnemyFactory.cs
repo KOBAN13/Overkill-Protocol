@@ -23,6 +23,7 @@ namespace Enemy.Factory
         private readonly TickableManager _tickableManager;
         private readonly IUpgradeStats _upgradeStats;
         private readonly Dictionary<HumanoidEnemy, EnemyRuntime> _runtime = new();
+        private readonly HashSet<HumanoidEnemy> _activeEnemies = new();
 
         public EnemyFactory(
             IObjectPool<HumanoidEnemy>  enemyPool,
@@ -57,6 +58,7 @@ namespace Enemy.Factory
             runtime.Health.SetDie(runtime.Die);
 
             _tickableManager.Add(runtime.EnemyMove);
+            _activeEnemies.Add(enemy);
             enemy.InitEnemy(runtime.Damage, runtime.EnemyMove);
 
             return enemy;
@@ -66,7 +68,10 @@ namespace Enemy.Factory
         {
             if (_runtime.TryGetValue(enemy, out var runtime))
             {
-                _tickableManager.Remove(runtime.EnemyMove);
+                if (_activeEnemies.Remove(enemy))
+                {
+                    _tickableManager.Remove(runtime.EnemyMove);
+                }
             }
 
             _enemyPool.Return(enemy);
@@ -74,14 +79,22 @@ namespace Enemy.Factory
 
         public void Dispose()
         {
+            foreach (var enemy in _activeEnemies)
+            {
+                if (_runtime.TryGetValue(enemy, out var runtime))
+                {
+                    _tickableManager.Remove(runtime.EnemyMove);
+                }
+            }
+
             foreach (var entry in _runtime)
             {
-                _tickableManager.Remove(entry.Value.EnemyMove);
                 entry.Value.Stats.Dispose();
                 _enemyPool.Release(entry.Key);
             }
 
             _runtime.Clear();
+            _activeEnemies.Clear();
         }
 
         private EnemyRuntime GetOrCreateRuntime(HumanoidEnemy enemy)
